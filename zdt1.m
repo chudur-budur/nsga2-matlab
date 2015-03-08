@@ -3,12 +3,12 @@ function [parent_pop] = zdt1(parent_pop, nreal, nobj)
 %   Detailed explanation goes here
 
 f1 = parent_pop(:,1);
-if nreal == 2
+if nreal == 2 
     g = parent_pop(:,2:nreal);
 else
     gvals = parent_pop(:,2:nreal)';
     g = sum(gvals,1);
-    g = g';    
+    g = g'; 
 end
 g = (g * 9.0) / (nreal-1) ;
 g = 1.0 + g ;

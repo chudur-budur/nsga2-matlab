@@ -1,7 +1,7 @@
 rng(123456, 'twister');
-popsize = 100 ;
+popsize = 4 ;
 nobj = 2 ;
-nreal = 30;
+nreal = 2 ;
 % no. of design variables, no. of objectives,  rank, constr violation, crowding distance
 ncols = nreal + nobj + 3 ; 
 parent_pop = zeros(popsize, ncols);
@@ -10,5 +10,5 @@ parent_pop(:,1:nreal) = rnd_real;
 % disp(parent_pop);
 parent_pop = zdt1(parent_pop, nreal);
 % disp(parent_pop);
-objvals = parent_pop(:, 31:32);
+objvals = parent_pop(:, nreal+1:nreal+2);
 scatter(objvals(:,1), objvals(:,2));
