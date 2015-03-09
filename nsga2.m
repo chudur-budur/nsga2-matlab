@@ -1,14 +1,26 @@
+
+% clear all workspace variables
+clear all;
+
+% global variables that may be used here
+global nreal ;
+global nobj ;
+
+% init rng
 rng(123456, 'twister');
-popsize = 4 ;
-nobj = 2 ;
-nreal = 2 ;
-% no. of design variables, no. of objectives,  rank, constr violation, crowding distance
-ncols = nreal + nobj + 3 ; 
-parent_pop = zeros(popsize, ncols);
-rnd_real = rand(popsize, nreal);
-parent_pop(:,1:nreal) = rnd_real;
-% disp(parent_pop);
-parent_pop = zdt1(parent_pop, nreal);
-% disp(parent_pop);
-objvals = parent_pop(:, nreal+1:nreal+2);
-scatter(objvals(:,1), objvals(:,2));
+
+% load algorithm parameters
+load_input_data('input_data/zdt1.debug.in');
+pprint('\nInput data successfully entered, now performing initialization\n\n');
+
+% this is the objective function that we are going to optimize
+obj_func = @zdt1 ;
+
+% initialize population
+parent_pop = initialize_pop();
+pprint('Initialization done, now performing first generation\n\n');
+pprint('initial pop:\n', parent_pop);
+parent_pop = evaluate_pop(parent_pop, obj_func);
+pprint('initial pop evaluated:\n', parent_pop);
+obj_vals = parent_pop(:,nreal+1:nreal+nobj);
+scatter(obj_vals(:,1), obj_vals(:,2));
