@@ -1,7 +1,5 @@
-function [ranked_pop] = assign_rank_and_crowding_distance(pop)
-%   This procedure applies the non-dominated sort and
-%   then compute the crowding distance within each front.
-
+function [ranked_pop] = assign_rank_only(pop)
+%   This function assigns only rank but no crowding distance
 global nreal ;
 global nobj ;
 global ncon ;
@@ -21,8 +19,6 @@ while (not(isempty(all_indices)))
     pf_indices = minus_one_count(minus_one_count(:,2) == 0,1);
     % assign the current front number
     pop(pf_indices, rank_col) = front;
-    % now do the crowding distance assignment for this front
-    pop = assign_crowding_distance(pop, pf_indices);   
     % now drop the ranked column/row from the dominance matrix
     dom_mat = drop_ranked_indices(dom_mat, pf_indices);    
     % remove the ranked indices from the list

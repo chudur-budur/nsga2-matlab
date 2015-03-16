@@ -1,46 +1,43 @@
-function [ cvec1, cvec2 ] = real_cross( pvec1, pvec2 )
+function [ c_vec1, c_vec2 ] = real_cross( p_vec1, p_vec2, pcross_real,...
+                                            eta_c, min_realvar, max_realvar)
 %   Applies SBX over two vectors of double.
 %   This code can be vectorized in a good way.
 
-global nreal ;
-global pcross_real ;
-global min_realvar ;
-global max_realvar ;
-global eta_c ;
+nreal = length(p_vec1);
 
 epsilon = 1.0e-14 ;
 
-cvec1 = zeros(1,nreal);
-cvec2 = zeros(1,nreal);
-rp = rand(5);
+c_vec1 = zeros(1,nreal);
+c_vec2 = zeros(1,nreal);
 
-if (rp(1) <= pcross_real)
+if (rand(1) <= pcross_real)
     for i = 1:nreal
-       if (rp(2) <= 0.5)
-           if (abs(pvec1(i) - pvec2(i)) > epsilon)
-                if (pvec1(i) < pvec2(i))
-                    y1 = pvec1(i) ;
-                    y2 = pvec2(i) ;
+       if (rand(1) <= 0.5)
+           if (abs(p_vec1(i) - p_vec2(i)) > epsilon)
+                if (p_vec1(i) < p_vec2(i))
+                    y1 = p_vec1(i) ;
+                    y2 = p_vec2(i) ;
                 else
-                    y1 = pvec2(i) ;
-                    y2 = pvec1(i) ;
+                    y1 = p_vec2(i) ;
+                    y2 = p_vec1(i) ;
                 end
                 yl = min_realvar(i);
                 yu = max_realvar(i);
                 beta_ = 1.0 + (2.0 * (y1 - yl) / (y2 - y1));
-				alpha_ = 2.0 - (beta_ ^ (-1.0 * (eta_c + 1.0)));				
-                if (rp(3) <= (1.0 / alpha_))
-						betaq = (rp(3) * alpha_) ^ (1.0/(eta_c + 1.0));
+				alpha_ = 2.0 - (beta_ ^ (-1.0 * (eta_c + 1.0)));
+                r = rand(1) ;
+                if (r <= (1.0 / alpha_))
+						betaq = (r * alpha_) ^ (1.0/(eta_c + 1.0));
                 else
-						betaq = (1.0 / (2.0 - rp(3) * alpha_)) ^ (1.0 / (eta_c + 1.0));
+						betaq = (1.0 / (2.0 - r * alpha_)) ^ (1.0 / (eta_c + 1.0));
                 end
 				c1 = 0.5 * ((y1 + y2) - (betaq * (y2 - y1)));
 				beta_ = 1.0 + (2.0 * (yu - y2)/(y2 - y1));
-				alpha_ = 2.0 - (beta_ ^ (-1.0 * (eta_c + 1.0)));				
-                if (rp(3) <= (1.0 / alpha_))
-						betaq = (rp(3) * alpha_) ^ (1.0 / (eta_c + 1.0));
+				alpha_ = 2.0 - (beta_ ^ (-1.0 * (eta_c + 1.0)));
+                if (r <= (1.0 / alpha_))
+						betaq = (r * alpha_) ^ (1.0 / (eta_c + 1.0));
                 else
-						betaq = (1.0 / (2.0 - rp(3) * alpha_)) ^ (1.0 / (eta_c + 1.0));
+						betaq = (1.0 / (2.0 - r * alpha_)) ^ (1.0 / (eta_c + 1.0));
                 end
 				c2 = 0.5 * ((y1 + y2) + betaq * (y2 - y1));
                 if (c1 < yl)
@@ -55,25 +52,25 @@ if (rp(1) <= pcross_real)
                 if (c2 > yu)
 					c2 = yu;
                 end				
-                if (rp(4) <= 0.5)
-					cvec1(i) = c2;
-					cvec2(i) = c1;
+                if (rand(1) <= 0.5)
+					c_vec1(i) = c2;
+					c_vec2(i) = c1;
                 else
-					cvec1(i) = c1;
-					cvec2(i) = c2;
+					c_vec1(i) = c1;
+					c_vec2(i) = c2;
                 end
             else
-                cvec1(i) = pvec1(i) ;
-                cvec2(i) = pvec2(i) ;
+                c_vec1(i) = p_vec1(i) ;
+                c_vec2(i) = p_vec2(i) ;
             end
         else
-            cvec1(i) = pvec1(i) ;
-            cvec2(i) = pvec2(i) ;
+            c_vec1(i) = p_vec1(i) ;
+            c_vec2(i) = p_vec2(i) ;
         end
     end
 else
-    cvec1 = pvec1 ;
-    cvec2 = pvec2 ;
+    c_vec1 = p_vec1 ;
+    c_vec2 = p_vec2 ;
 end
 
 % disp(cvec1)
