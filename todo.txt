@@ -1,0 +1,12 @@
+1. generate_dominance_matrix:
+	-- remove the loop over the objectives
+2. assign_crowding_distance:
+	-- vectorize
+3. real_cross:
+	-- vectorize
+4. real_mutate:
+	-- vectorize
+5. drop_ranked_indices():
+	-- optimize
+6. selection:
+	-- could be vectorize ?
