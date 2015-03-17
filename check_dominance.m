@@ -32,13 +32,13 @@ else
         val = -1 ;
         return ;
     elseif(cv1 == 0 && cv2 < 0)
-            val = 1  ;
-            return ;
+        val = 1  ;
+        return ;
     else
         if(all(obj1 > obj2))
             val = -1 ;
             return ;
-        elseif(all(obj1 < obj2))        
+        elseif(all(obj1 < obj2))      
             val = 1 ;
             return ;
         else

@@ -27,10 +27,13 @@ obj_col = nreal + 1 : nreal + nobj ;
 % pop(pf_indices,end) = dists ; 
 % % disp(pop)
 
+fmax = max(pop(:,obj_col));
+fmin = min(pop(:,obj_col));
 submat = pop(pf_indices,:);
+submat(:,end) = 0 ;
 for f = 1:nobj
-    fmax = max(submat(:,obj_col));
-    fmin = min(submat(:,obj_col));
+    % fmax = max(submat(:,obj_col));
+    % fmin = min(submat(:,obj_col));
     submat = sortrows(submat, nreal + f);
     submat(1,end) = inf ;
     submat(end,end) = inf ;
@@ -44,5 +47,7 @@ for f = 1:nobj
     end
     % pprint('submat here:\n', submat);
 end
+submat(:,end) = submat(:,end)/nobj ;
+% pprint('submat here-1:\n', submat);
 pop(pf_indices,:) = submat ;
 end

@@ -30,21 +30,21 @@ parent_pop = assign_rank_and_crowding_distance(parent_pop);
 pprint('initial pop evaluated and ranked:\n', parent_pop);
 
 % plot it
-plotpf(i,parent_pop);
+plotpf(1,parent_pop, true);
 
-for i = 2:ngen
-    fprintf('gen = %d\n', i)
-    child_pop = selection(parent_pop, child_pop);
-    child_pop = mutation_pop(child_pop);
-    % pprint(sprintf('[main gen = %d] child pop before eval:\n', i), child_pop);
-    child_pop = evaluate_pop(child_pop, obj_func);
-    % pprint(sprintf('[main gen = %d] child pop evaluated:\n', i), child_pop);
-    mixed_pop = merge(parent_pop, child_pop);
-    % pprint(sprintf('[main gen = %d] mixed_pop:\n',i), mixed_pop);
-    parent_pop = fill_nondominated_sort(mixed_pop);
-    % pprint(sprintf('[main gen = %d] new parent_pop:\n',i), parent_pop);
-    
-    % plot them
-    plotpf(i, parent_pop);    
-end
+% for i = 2:ngen
+%     fprintf('gen = %d\n', i)
+%     child_pop = selection(parent_pop, child_pop);
+%     child_pop = mutation_pop(child_pop);
+%     % pprint(sprintf('[main gen = %d] child pop before eval:\n', i), child_pop);
+%     child_pop = evaluate_pop(child_pop, obj_func);
+%     % pprint(sprintf('[main gen = %d] child pop evaluated:\n', i), child_pop);
+%     mixed_pop = merge(parent_pop, child_pop);
+%     % pprint(sprintf('[main gen = %d] mixed_pop:\n',i), mixed_pop);
+%     parent_pop = fill_nondominated_sort(mixed_pop);
+%     % pprint(sprintf('[main gen = %d] new parent_pop:\n',i), parent_pop);
+%     
+%     % plot them
+%     plotpf(i, parent_pop);    
+% end
 pprint('done\n');

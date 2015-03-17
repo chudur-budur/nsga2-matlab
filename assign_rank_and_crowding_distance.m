@@ -30,7 +30,8 @@ while (not(isempty(all_indices)))
     % go to next front
     front = front + 1;
 end
-ranked_pop = sortrows(pop, rank_col) ;
+ranked_pop = pop ;
+% ranked_pop = sortrows(pop, rank_col) ;
 end
 
 function [mat] = drop_ranked_indices(mat, indices)
