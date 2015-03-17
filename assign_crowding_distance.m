@@ -9,18 +9,22 @@ global nobj ;
 
 obj_col = nreal + 1 : nreal + nobj ;
 
-submat = [pop(pf_indices,obj_col),pop(pf_indices,end)];
-submat(:,end) = 0 ;
-disp(submat)
-cells = num2cell(submat,1) ;
-normalized = cellfun(@(x) (x - min(x))/(max(x) - min(x)), cells, 'uniform', false) ;
-manmat = mandist(cell2mat(normalized).') ;
-dists = diag(manmat,2); 
-dists = [dists;inf]; 
-dists = [inf;dists];
-disp(dists)
+submat = pop(pf_indices,obj_col);
+% disp(submat)
+if(length(pf_indices) > 1)
+    cells = num2cell(submat,1) ;
+    normalized = cellfun(@(x) (x - min(x))/(max(x) - min(x)), cells, 'uniform', false) ;
+    manmat = mandist(cell2mat(normalized).') ;
+    % disp(manmat)
+    dists = diag(manmat,2); 
+    dists = [dists;inf]; 
+    dists = [inf;dists];
+    % disp(dists)
+else
+    dists = inf ;
+end
 pop(pf_indices,end) = dists ; 
-disp(pop)
+% disp(pop)
 
 
 % for f = 1:nobj
