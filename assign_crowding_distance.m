@@ -17,6 +17,7 @@ if(length(pf_indices) > 1)
     manmat = mandist(cell2mat(normalized).') ;
     % disp(manmat)
     dists = diag(manmat,2); 
+    dists = dists/nobj ;
     dists = [dists;inf]; 
     dists = [inf;dists];
     % disp(dists)
