@@ -50,5 +50,7 @@ end
 % end of check_dominance
 end
 
-function flag1(
+function [val] = flag1(obj1, obj2)
+    % This function computed the flag1 as the original nsga2 code.
+end
 
