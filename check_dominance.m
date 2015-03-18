@@ -50,3 +50,5 @@ end
 % end of check_dominance
 end
 
+function flag1(
+
