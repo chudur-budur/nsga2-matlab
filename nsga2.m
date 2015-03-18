@@ -10,7 +10,7 @@ global ncon ;
 global ngen ;
 
 % load algorithm parameters
-load_input_data('input_data/zdt1.debug.in');
+load_input_data('input_data/zdt1.in');
 pprint('\nInput data successfully entered, now performing initialization\n\n');
 
 obj_col = nreal + 1 : nreal + nobj ;

@@ -9,24 +9,6 @@ global nobj ;
 
 obj_col = nreal + 1 : nreal + nobj ;
 
-% submat = pop(pf_indices,obj_col);
-% % disp(submat)
-% if(length(pf_indices) > 1)
-%     cells = num2cell(submat,1) ;
-%     normalized = cellfun(@(x) (x - min(x))/(max(x) - min(x)), cells, 'uniform', false) ;
-%     manmat = mandist(cell2mat(normalized).') ;
-%     % disp(manmat)
-%     dists = diag(manmat,2); 
-%     dists = dists/nobj ;
-%     dists = [dists;inf]; 
-%     dists = [inf;dists];
-%     % disp(dists)
-% else
-%     dists = inf ;
-% end
-% pop(pf_indices,end) = dists ; 
-% % disp(pop)
-
 fmax = max(pop(:,obj_col));
 fmin = min(pop(:,obj_col));
 submat = pop(pf_indices,:);
@@ -50,4 +32,24 @@ end
 submat(:,end) = submat(:,end)/nobj ;
 % pprint('submat here-1:\n', submat);
 pop(pf_indices,:) = submat ;
+
+% VECTORIZED VERSION OF THE ABOVE CODE
+% submat = pop(pf_indices,obj_col);
+% % disp(submat)
+% if(length(pf_indices) > 1)
+%     cells = num2cell(submat,1) ;
+%     normalized = cellfun(@(x) (x - min(x))/(max(x) - min(x)), cells, 'uniform', false) ;
+%     manmat = mandist(cell2mat(normalized).') ;
+%     % disp(manmat)
+%     dists = diag(manmat,2); 
+%     dists = dists/nobj ;
+%     dists = [dists;inf]; 
+%     dists = [inf;dists];
+%     % disp(dists)
+% else
+%     dists = inf ;
+% end
+% pop(pf_indices,end) = dists ; 
+% % disp(pop)
+
 end
