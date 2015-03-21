@@ -16,6 +16,9 @@ cv1 = vec1(end);
 obj2 = vec2(1:end-1);
 cv2 = vec2(end);
 
+flag1 = 0 ;
+flag2 = 0 ;
+
 if(cv1 < 0 && cv2 < 0)
     if(cv1 > cv2)
         val = 1 ;
@@ -35,11 +38,16 @@ else
         val = 1  ;
         return ;
     else
-        if(all(obj1 > obj2))
-            val = -1 ;
-            return ;
-        elseif(all(obj1 < obj2))      
+        if(any(obj1 < obj2))
+            flag1 = 1 ;        
+        elseif(any(obj1 > obj2))      
+            flag2 = 1 ;
+        end
+        if (flag1 == 1 && flag2 == 0)
             val = 1 ;
+            return ;
+        elseif (flag1 == 0 && flag2 == 1)
+            val = -1 ;
             return ;
         else
             val = 0 ;
@@ -49,8 +57,3 @@ else
 end
 % end of check_dominance
 end
-
-function [val] = flag1(obj1, obj2)
-    % This function computed the flag1 as the original nsga2 code.
-end
-

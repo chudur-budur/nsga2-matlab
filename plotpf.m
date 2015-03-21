@@ -12,7 +12,7 @@ function plotpf(gen, pop, is_text)
     str = sprintf('gen = %d', gen);
 
     hold off; 
-    subplot(1,1, 1);
+    subplot(1,1,1);
     if nobj == 2
         plot(objs(:,1), objs(:,2), 'ro', 'MarkerSize', 4);
         xlabel('f1', 'FontSize', 6);

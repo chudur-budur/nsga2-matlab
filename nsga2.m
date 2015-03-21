@@ -11,6 +11,7 @@ global ngen ;
 
 % load algorithm parameters
 load_input_data('input_data/zdt1.in');
+% modified popsize for debugging
 pprint('\nInput data successfully entered, now performing initialization\n\n');
 
 obj_col = nreal + 1 : nreal + nobj ;
@@ -21,7 +22,7 @@ child_pop = zeros(popsize, nreal + nobj + ncon + 3);
 mixed_pop = zeros(2 * popsize, nreal + nobj + ncon + 3);
 
 % initialize population
-parent_pop = initialize_pop(34654);
+parent_pop = initialize_pop(12345);
 pprint('Initialization done, now performing first generation\n\n');
 % pprint('initial pop:\n', parent_pop);
 parent_pop = evaluate_pop(parent_pop, obj_func);
@@ -30,12 +31,13 @@ parent_pop = assign_rank_and_crowding_distance(parent_pop);
 % pprint('initial pop evaluated and ranked:\n', parent_pop);
 
 % plot it
-plotpf(1,parent_pop, false);
+plotpf(1, parent_pop, false);
 
 for i = 2:ngen
     fprintf('gen = %d\n', i)
     child_pop = selection(parent_pop, child_pop);
     child_pop = mutation_pop(child_pop);
+    child_pop(:,obj_col) = 0;
     % pprint(sprintf('[main gen = %d] child pop before eval:\n', i), child_pop);
     child_pop = evaluate_pop(child_pop, obj_func);
     % pprint(sprintf('[main gen = %d] child pop evaluated:\n', i), child_pop);
