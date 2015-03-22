@@ -5,19 +5,25 @@ clear all;
 % global variables that may be used here
 global popsize ;
 global nreal ;
+global min_realvar ;
+global max_realvar ;
 global nobj ;
 global ncon ;
 global ngen ;
 
 % load algorithm parameters
-load_input_data('input_data/zdt1.in');
-% modified popsize for debugging
+load_input_data('input_data/zdt3.in');
+% mod for debugging purposes --
+% popsize =  12;
+% nreal = 3 ;
+% min_realvar = min_realvar(1:nreal,:);
+% max_realvar = max_realvar(1:nreal,:);
 pprint('\nInput data successfully entered, now performing initialization\n\n');
 
 obj_col = nreal + 1 : nreal + nobj ;
 
 % this is the objective function that we are going to optimize
-obj_func = @zdt1 ;
+obj_func = @zdt3 ;
 child_pop = zeros(popsize, nreal + nobj + ncon + 3);
 mixed_pop = zeros(2 * popsize, nreal + nobj + ncon + 3);
 

@@ -1,53 +1,81 @@
 function [ pop ] = assign_crowding_distance(pop, pf_indices)
 %   This function assigns crowding distance within a front
-%   pointed by the row indices in pf_indices. Code is currently
-%   a direct translation from the original nsga-2 c-code.
-%   ** VECTORIZATION NEEDED and THIS CODE IS NOT RIGHT
+%   pointed by the row indices in pf_indices. Code is a 
+%   vectorized translation from the original nsga-2 c-code.
  
 global nreal ;
 global nobj ;
 
 obj_col = nreal + 1 : nreal + nobj ;
 
-fmax = max(pop(:,obj_col));
-fmin = min(pop(:,obj_col));
-submat = pop(pf_indices,:);
-submat(:,end) = 0 ;
-for f = 1:nobj
-    submat = sortrows(submat, nreal + f);
-    submat(1,end) = inf ;
-    submat(end,end) = inf ;
-    [l,~] = size(submat);
-    for i = 2:l-1
-        if(submat(i,end) ~= inf)
-            submat(i,end) = submat(i,end) + ...
-                ((submat(i+1,nreal+f) - submat(i-1,nreal+f))/...
-                                (fmax(f) - fmin(f)));
-        end
-    end
-    % pprint('submat here:\n', submat);
-end
-submat(:,end) = submat(:,end)/nobj ;
-% pprint('submat here-1:\n', submat);
-pop(pf_indices,:) = submat ;
+% clear the CD values.
+pop(pf_indices,end) = 0 ;
+% THIS IS THE ORIGINAL NSGA-2 c-CODE
+% front = pop(pf_indices,:);
+% fmax = max(front(:,obj_col));
+% fmin = min(front(:,obj_col));
+% for f = 1:nobj
+%     front = sortrows(front, nreal + f);
+%     front(1,end) = inf ;
+%     front(end,end) = inf ;
+%     [l,~] = size(front);
+%     for i = 2:l-1
+%         if(front(i,end) ~= inf)
+%             front(i,end) = front(i,end) + ...
+%                 ((front(i+1,nreal+f) - front(i-1,nreal+f))/...
+%                                 (fmax(f) - fmin(f)));
+%         end
+%     end
+% end
+% front(:,end) = front(:,end) / nobj ;
+% % tester = front ;
+% pop(pf_indices,:) = front ;
+% % disp(front)
 
 % VECTORIZED VERSION OF THE ABOVE CODE
-% submat = pop(pf_indices,obj_col);
-% % disp(submat)
-% if(length(pf_indices) > 1)
-%     cells = num2cell(submat,1) ;
-%     normalized = cellfun(@(x) (x - min(x))/(max(x) - min(x)), cells, 'uniform', false) ;
-%     manmat = mandist(cell2mat(normalized).') ;
-%     % disp(manmat)
-%     dists = diag(manmat,2); 
-%     dists = dists/nobj ;
-%     dists = [dists;inf]; 
-%     dists = [inf;dists];
-%     % disp(dists)
-% else
-%     dists = inf ;
-% end
-% pop(pf_indices,end) = dists ; 
-% % disp(pop)
+% THIS IS 10% FASTER
+len = length(pf_indices);
+if(len == 1 || len == 2)
+    pop(pf_indices,end) = inf ;
+    return ;
+elseif(len == 3)
+    front = pop(pf_indices,:);
+    for f = 1:nobj
+        sorted_front = sortrows(front, nreal + f);
+        % set the boundary values to inf
+        sorted_front(1,end) = inf ;
+        sorted_front(end,end) = inf ;
+    end
+    pop(pf_indices,:) = sorted_front ;
+    return ;
+else    
+    front = pop(pf_indices,:);
+    % front(:,end) = 0 ;
+    fmax = max(front(:,obj_col));
+    fmin = min(front(:,obj_col));
+    for f = 1:nobj
+        sorted_front = sortrows(front, nreal + f);
+        % set the boundary values to inf
+        sorted_front(1,end) = inf ;
+        sorted_front(end,end) = inf ;
+        % get the obj values only
+        objvals = sorted_front(:, nreal+1:nreal+nobj);    
+        % normalize the values
+        objvals = bsxfun(@times, bsxfun(@minus, objvals, fmin),... 
+                                    1./abs(fmax - fmin));    
+        % get the manhattan distances in the complete graph
+        manmat = sum(abs(bsxfun(@minus,permute(objvals,[1 3 2]), ...
+                                       permute(objvals,[3 1 2]))),3);    
+        % the CD values are the 2nd diagonal
+        cds = diag(manmat,2) ;
+        % update the CD values
+        sorted_front(2:end-1,end) = sorted_front(2:end-1,end) + cds ;
+    end
+    sorted_front(:,end) = sorted_front(:,end) / nobj ;
+    pop(pf_indices,:) = sorted_front ;
+    % pprint('sorted_front:\n', sorted_front);
+    % pprint('tester:\n', tester);
+    % disp(sorted_front)
+end
 
 end
