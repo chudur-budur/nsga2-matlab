@@ -1,6 +1,9 @@
 function [ new_pop ] = selection(old_pop, new_pop)
 %   Applies tournament selection to generate a child population
-%   Is this function vectorizable ??
+%   We did not vectorize this function as we want to keep this procedure
+%   separate from those of the crossover and the mutation. Otherwise
+%   implementation of different kind of selection strategy will not be
+%   straight forward.
 
 global nreal ;
 global min_realvar ;

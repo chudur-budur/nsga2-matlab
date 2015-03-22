@@ -78,10 +78,11 @@ c_vec2 = zeros(1,nreal);
 % disp(cvec1)
 % disp(cvec2)
 
-% This is the vectorized version of the above code,
-% this will give double speed up than the above one.
+% This is the vectorized version of the above code, this will generally 
+% give you 2-times speed up than the above code, especially you will 
+% observe even more speed up when the length of the variable gets larger.
 if(rand(1) <= pcross_real) 
-    % ncross = ncross + len;
+    % ncross = ncross + 1 ;
     randv1lthalf = rand(1,nreal) <  0.5 ;    
     absdiffgteps = abs(p_vec1 - p_vec2) > (zeros(1,nreal) * epsilon) ;    
     xover_index = randv1lthalf & absdiffgteps ;

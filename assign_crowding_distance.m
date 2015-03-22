@@ -33,8 +33,9 @@ pop(pf_indices,end) = 0 ;
 % pop(pf_indices,:) = front ;
 % % disp(front)
 
-% Vectorized version of the above code.
-% this is 10% faster than the above code.
+% Vectorized version of the above code, generally this is 10% faster, 
+% however more gain could be observed when the number of individuals in a
+% front gets bigger. 
 len = length(pf_indices);
 if(len == 1 || len == 2)
     pop(pf_indices,end) = inf ;

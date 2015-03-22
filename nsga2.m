@@ -11,6 +11,7 @@ global nobj ;
 global ncon ;
 global ngen ;
 global pcross_real ;
+global pmut_real ;
 
 % load algorithm parameters
 load_input_data('input_data/zdt2.in');
@@ -19,7 +20,8 @@ load_input_data('input_data/zdt2.in');
 % nreal = 3 ;
 % min_realvar = min_realvar(1:nreal,:);
 % max_realvar = max_realvar(1:nreal,:);
-pcross_real = 1.0 ;
+% pcross_real = 1.0 ;
+% pmut_real = 1.0 ;
 pprint('\nInput data successfully entered, now performing initialization\n\n');
 
 obj_col = nreal + 1 : nreal + nobj ;
