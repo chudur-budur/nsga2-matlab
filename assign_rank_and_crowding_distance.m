@@ -35,8 +35,9 @@ ranked_pop = pop ;
 end
 
 function [mat] = drop_ranked_indices(mat, indices)
-    % find(any(bsxfun(@eq, mat(:,1), indices),2)); % BETTER ??
-    rel_col_indices = find(ismember(mat(:,1),indices));  
+    % find(any(bsxfun(@eq, mat(:,1), indices.'),2)); % is better than 
+    % find(ismember(mat(:,1),indices));  
+    rel_col_indices = find(any(bsxfun(@eq, mat(:,1), indices.'),2)); 
     mat(:,rel_col_indices+1) = [] ;
     mat(rel_col_indices,:) = [] ;    
 end

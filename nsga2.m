@@ -1,6 +1,8 @@
 
 % clear all workspace variables
 clear all;
+addpath('input_data');
+addpath('problemdef');
 
 % global variables that may be used here
 global popsize ;
