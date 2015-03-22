@@ -10,7 +10,8 @@ obj_col = nreal + 1 : nreal + nobj ;
 
 % clear the CD values.
 pop(pf_indices,end) = 0 ;
-% THIS IS THE ORIGINAL NSGA-2 c-CODE
+
+% This is the original nsga-2 c-code.
 % front = pop(pf_indices,:);
 % fmax = max(front(:,obj_col));
 % fmin = min(front(:,obj_col));
@@ -32,8 +33,8 @@ pop(pf_indices,end) = 0 ;
 % pop(pf_indices,:) = front ;
 % % disp(front)
 
-% VECTORIZED VERSION OF THE ABOVE CODE
-% THIS IS 10% FASTER
+% Vectorized version of the above code.
+% this is 10% faster than the above code.
 len = length(pf_indices);
 if(len == 1 || len == 2)
     pop(pf_indices,end) = inf ;

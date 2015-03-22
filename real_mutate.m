@@ -1,7 +1,6 @@
 function [pvec] = real_mutate(pvec, pmut_real, eta_m, ...
                                 min_realvar, max_realvar)
 %   This code applies polynomical mutation over pvec.
-%   This code can also be vectorized in a very good way.
 
 nreal = length(pvec);
 for j = 1:nreal

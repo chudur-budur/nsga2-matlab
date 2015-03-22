@@ -10,20 +10,22 @@ global max_realvar ;
 global nobj ;
 global ncon ;
 global ngen ;
+global pcross_real ;
 
 % load algorithm parameters
-load_input_data('input_data/zdt3.in');
+load_input_data('input_data/zdt2.in');
 % mod for debugging purposes --
 % popsize =  12;
 % nreal = 3 ;
 % min_realvar = min_realvar(1:nreal,:);
 % max_realvar = max_realvar(1:nreal,:);
+pcross_real = 1.0 ;
 pprint('\nInput data successfully entered, now performing initialization\n\n');
 
 obj_col = nreal + 1 : nreal + nobj ;
 
 % this is the objective function that we are going to optimize
-obj_func = @zdt3 ;
+obj_func = @zdt2 ;
 child_pop = zeros(popsize, nreal + nobj + ncon + 3);
 mixed_pop = zeros(2 * popsize, nreal + nobj + ncon + 3);
 
