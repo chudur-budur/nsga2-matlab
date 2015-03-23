@@ -4,7 +4,7 @@ function [pvec] = real_mutate(pvec, pmut_real, eta_m, ...
 
 nreal = length(pvec);
 
-if(nreal < 1)
+if(nreal < 10)
     pvec = polymut_looped(pvec, pmut_real, eta_m, ...
                             min_realvar, max_realvar);
 else

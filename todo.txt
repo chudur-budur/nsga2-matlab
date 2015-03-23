@@ -3,3 +3,4 @@
 2. write all benchmark test functions
 3. write a function for plotting ps+pf
 4. output file handling
+5. re-write the rng from the original c code

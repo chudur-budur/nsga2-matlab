@@ -16,20 +16,20 @@ global pcross_real ;
 global pmut_real ;
 
 % load algorithm parameters
-load_input_data('input_data/zdt4.in');
+load_input_data('input_data/zdt2.in');
 % mod for debugging purposes --
 % popsize =  8;
 % nreal = 3 ;
 % min_realvar = min_realvar(1:nreal,:);
 % max_realvar = max_realvar(1:nreal,:);
-% pcross_real = 1.0 ;
+% pcross_real = 0.0 ;
 % pmut_real = 0.0 ;
 pprint('\nInput data successfully entered, now performing initialization\n\n');
 
 obj_col = nreal + 1 : nreal + nobj ;
 
 % this is the objective function that we are going to optimize
-obj_func = @zdt4 ;
+obj_func = @zdt2 ;
 child_pop = zeros(popsize, nreal + nobj + ncon + 3);
 mixed_pop = zeros(2 * popsize, nreal + nobj + ncon + 3);
 

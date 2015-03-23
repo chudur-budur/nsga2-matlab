@@ -12,12 +12,14 @@ c_vec2 = zeros(1,nreal);
 
 if(rand(1) <= pcross_real) 
     % ncross = ncross + 1 ;
-    if(nreal < 1)
+    if(nreal < 10)
+        % fprintf('doing looped sbx\n');
         [c_vec1, c_vec2] = sbx_looped(p_vec1, p_vec2, ...
                                     c_vec1, c_vec2, ...
                                     epsilon, eta_c, ...
                                     min_realvar, max_realvar);
     else
+        % fprintf('doing vectorized sbx\n');
         [c_vec1, c_vec2] = sbx_vectorized(p_vec1, p_vec2, ...
                                     c_vec1, c_vec2, ...
                                     epsilon, eta_c, ...
@@ -49,9 +51,9 @@ for i = 1:nreal
             end
             yl = min_realvar(i);
             yu = max_realvar(i);
-            beta_ = 1.0 + (2.0 * (y1 - yl) / (y2 - y1));
-            alpha_ = 2.0 - (beta_ ^ (-1.0 * (eta_c + 1.0)));
             r = rand(1) ;
+            beta_ = 1.0 + (2.0 * (y1 - yl) / (y2 - y1));
+            alpha_ = 2.0 - (beta_ ^ (-1.0 * (eta_c + 1.0)));            
             if (r <= (1.0 / alpha_))
                     betaq = (r * alpha_) ^ (1.0/(eta_c + 1.0));
             else
