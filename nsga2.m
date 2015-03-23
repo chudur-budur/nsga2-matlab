@@ -29,7 +29,11 @@ pprint('\nInput data successfully entered, now performing initialization\n\n');
 obj_col = nreal + 1 : nreal + nobj ;
 
 % this is the objective function that we are going to optimize
+<<<<<<< Updated upstream
 obj_func = @zdt2 ;
+=======
+obj_func = @zdt1 ;
+>>>>>>> Stashed changes
 child_pop = zeros(popsize, nreal + nobj + ncon + 3);
 mixed_pop = zeros(2 * popsize, nreal + nobj + ncon + 3);
 
