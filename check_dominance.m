@@ -38,17 +38,6 @@ else
         val = 1  ;
         return ;
     else
-%         if(any(obj1 < obj2))
-%             flag1 = 1 ;        
-%         elseif(any(obj1 > obj2))      
-%             flag2 = 1 ;
-%         end
-%         if (flag1 == 1 && flag2 == 0)
-%             val = 1 ;
-%             return ;
-%         elseif (flag1 == 0 && flag2 == 1)
-%             val = -1 ;
-%             return ;
         if(any(obj1 < obj2) && ~(any(obj1 > obj2)))
             val = 1 ;
         elseif(~(any(obj1 < obj2)) && any(obj1 > obj2))           
