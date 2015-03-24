@@ -16,9 +16,6 @@ cv1 = vec1(end);
 obj2 = vec2(1:end-1);
 cv2 = vec2(end);
 
-flag1 = 0 ;
-flag2 = 0 ;
-
 if(cv1 < 0 && cv2 < 0)
     if(cv1 > cv2)
         val = 1 ;
