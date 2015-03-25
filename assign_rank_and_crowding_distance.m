@@ -5,6 +5,7 @@ function [ranked_pop] = assign_rank_and_crowding_distance(pop)
 global nreal ;
 global nobj ;
 global ncon ;
+
 rank_col = nreal + nobj + ncon + 2 ;
 [popsize, ~] = size(pop);
 
@@ -13,6 +14,7 @@ all_indices = 1:popsize; % initially start with the whole population
 dom_mat = generate_dominance_matrix(... % It's fast now
                 pop(all_indices,:), ...
                 all_indices);
+% dom_mat = dominance_matrix ;
 front = 1 ; % initial front is 1
 while (not(isempty(all_indices)))
 % for i = 1:1

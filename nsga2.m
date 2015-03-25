@@ -1,8 +1,10 @@
 
 % clear all workspace variables
 clear all;
-addpath('input_data'); % this is where all the algorithm parameters are
-addpath('problemdef'); % this is where all the problems are defined
+
+addpath(genpath('./input_data')); % this is where all the algorithm parameters are
+addpath(genpath('./problemdef')); % this is where all the problems are defined
+addpath(genpath('./tweak'));    % all tweak stuffs go here
 
 % global variables that may be used here
 global popsize ;
@@ -16,7 +18,7 @@ global pcross_real ;
 global pmut_real ;
 
 % load algorithm parameters
-load_input_data('input_data/osy.in');
+load_input_data('input_data/zdt4.in');
 % mod for debugging purposes --
 % popsize =  8;
 % nreal = 3 ;
@@ -29,7 +31,7 @@ pprint('\nInput data successfully entered, now performing initialization\n\n');
 obj_col = nreal + 1 : nreal + nobj ;
 
 % this is the objective function that we are going to optimize
-obj_func = @osy ;
+obj_func = @zdt4 ;
 child_pop = zeros(popsize, nreal + nobj + ncon + 3);
 mixed_pop = zeros(2 * popsize, nreal + nobj + ncon + 3);
 
@@ -41,6 +43,9 @@ parent_pop = evaluate_pop(parent_pop, obj_func);
 % pprint('initial pop evaluated:\n', parent_pop);
 parent_pop = assign_rank_and_crowding_distance(parent_pop);
 % pprint('initial pop evaluated and ranked:\n', parent_pop);
+% parent_pop = merge_front(parent_pop);
+% spread = calc_spread(parent_pop);
+% fprintf('%d, %.3f\n', 1, spread);
 
 % plot the pareto front
 plotpf(1, parent_pop, false);
@@ -57,6 +62,10 @@ for i = 2:ngen
     % pprint(sprintf('[main gen = %d] mixed_pop:\n',i), mixed_pop);
     parent_pop = fill_nondominated_sort(mixed_pop);
     % pprint(sprintf('[main gen = %d] new parent_pop:\n',i), parent_pop);
+    % parent_pop = merge_front(parent_pop);
+    
+%     spread = calc_spread(parent_pop);
+%     fprintf('%d, %.3f\n', i, spread);
     
     % plot the current pareto front
     plotpf(i, parent_pop);    
