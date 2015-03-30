@@ -134,6 +134,7 @@ if(len > 0)
     beta_v = 1.0 + (2.0 .* (y1v - ylv) ./ (y2v - y1v));
     alpha_v = 2.0 - (beta_v .^ (-1.0 .* (eta_cv + 1.0)));
     rltalpha = rv <= (1.0 ./ alpha_v);
+    % bsxfun here ?
     betaqv = ((rv .* alpha_v) .^ (1.0 ./ (eta_cv + 1.0))) .* ... 
                 rltalpha + ((1.0 ./ (2.0 - rv .* alpha_v)) .^ ...
                     (1.0 ./ (eta_cv + 1.0))) .* (~rltalpha);
@@ -142,6 +143,7 @@ if(len > 0)
     beta_v = 1.0 + (2.0 .* (yuv - y2v) ./ (y2v - y1v));
     alpha_v = 2.0 - (beta_v .^ (-1.0 .* (eta_cv + 1.0)));
     rltalpha = rv <= (1.0 ./ alpha_v);
+    % bsxfun here ?
     betaqv = ((rv .* alpha_v) .^ (1.0 ./ (eta_cv + 1.0))) .* ... 
                 rltalpha + ((1.0 ./ (2.0 - rv .* alpha_v)) .^ ...
                     (1.0 ./ (eta_cv + 1.0))) .* (~rltalpha);
