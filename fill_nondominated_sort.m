@@ -18,9 +18,7 @@ mixed_pop(:,rank_col) = 0 ;
 mixed_pop(:,cd_col) = 0 ;
 
 % assign rank
-% pprint('[fill_nodominated_sort] mixed_pop before rank:\n', mixed_pop);
 mixed_pop = assign_rank_only(mixed_pop);
-% pprint('[fill_nodominated_sort] mixed_pop after rank:\n', mixed_pop);
 
 last_rank = mixed_pop(half_size,rank_col);
 next_last_rank = mixed_pop(half_size+1, rank_col);
@@ -35,6 +33,5 @@ for r = 1:last_rank
         mixed_pop(rank_indices,:) = sortrows(mixed_pop(rank_indices,:), -cd_col);
     end
 end
-% pprint('[fill_nondominated_sort] mixed_pop after cd:\n', mixed_pop);
 new_pop = mixed_pop(1:half_size,:) ;
 end

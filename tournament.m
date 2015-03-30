@@ -10,14 +10,9 @@ global ncon ;
 obj_col = nreal+1:nreal+nobj;
 cv_col = nreal+nobj+ncon+1;
 
-% disp(index1)
-% disp(index2)
-% disp([pop(index1,obj_col), pop(index1,cv_col)])
-% disp([pop(index2,obj_col), pop(index2,cv_col)])
-
+% check the dominance
 flag = check_dominance([pop(index1,obj_col), pop(index1,cv_col)], ...
                        [pop(index2,obj_col), pop(index2,cv_col)]);
-% flag = check_dominance(pop, index1, index2);
 
 cdist1 = pop(index1, end);
 cdist2 = pop(index2, end);

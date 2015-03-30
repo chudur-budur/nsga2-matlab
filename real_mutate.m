@@ -11,7 +11,6 @@ else
     pvec = polymut_vectorized(pvec, pmut_real, eta_m, ...
                             min_realvar, max_realvar);
 end
-% pprint('pvec:\n', pvec);
 end
 
 function [pvec] = polymut_looped(pvec, pmut_real, eta_m, ...
@@ -53,13 +52,13 @@ function [pvec] = polymut_vectorized(pvec, pmut_real, eta_m, ...
 % This is the vectorized version of the above code. This code is generally 
 % 3 times faster than the above, more gain could be observed if the number 
 % of variable is bigger and the mutation rate is higher.
+
 nreal = length(pvec);
 mut_index = rand(1,nreal) < pmut_real ;
-% mut_index = r1s < pmut_real ;
 abs_mut_index = 1:nreal ;
 abs_mut_index = abs_mut_index(mut_index);
 mlen = length(abs_mut_index);
-% pprint('mlen:\n', mlen);
+
 if(mlen > 0)
     eta_mv = ones(1,mlen) * eta_m ;
     yv = pvec(mut_index) ;    
@@ -80,8 +79,7 @@ if(mlen > 0)
     yltyl = yv < ylv ;
     ygtyu = yv > yuv ;
     yv = (yltyl .* ylv) + (yv .* (~yltyl));
-    yv = (ygtyu .* yuv) + (yv .* (~ygtyu));        
-    % pprint('yv:\n', yv);
+    yv = (ygtyu .* yuv) + (yv .* (~ygtyu));            
     pvec = pvec' ;
     pvec(abs_mut_index.',:) = yv' ;
     pvec = pvec' ;

@@ -75,9 +75,6 @@ else
     end
     sorted_front(:,end) = sorted_front(:,end) / nobj ;
     pop(pf_indices,:) = sorted_front ;
-    % pprint('sorted_front:\n', sorted_front);
-    % pprint('tester:\n', tester);
-    % disp(sorted_front)
 end
 
 end
