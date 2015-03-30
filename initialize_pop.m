@@ -1,4 +1,4 @@
-function [ pop ] = initialize_pop(seed)
+function [ pop ] = initialize_pop(rseed)
 %   This function initializes a whole populaiton, where the populations
 %   is a matrix with dimension like this --
 %                   nvar    nobj    ncon    constr     rank     crowd-dist
@@ -14,14 +14,19 @@ global nobj ;
 global ncon ;
 global min_realvar ;
 global max_realvar ;
+% global seed ; % Knuth's algo, SLOW !!!
 
 % init rng
-rng(seed, 'twister');
+rng(rseed, 'twister');
+
+% seed = rseed ;
+% randomize(); % SLOW !!!
 
 % each individual is arranged like this --
 % [nvar, nobj, ncon, cv, rank, crowd-dist]
 pop = zeros(popsize, nreal + nobj + ncon + 3);
 rand_vals = rand(popsize, nreal);
+% rand_vals = randompercv(popsize, nreal); % SLOW !!!
 rand_vals = bsxfun(@plus, bsxfun(@times, rand_vals, ...
                                         max_realvar'-min_realvar'), ...
                                     min_realvar');

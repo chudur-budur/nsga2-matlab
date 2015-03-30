@@ -11,6 +11,7 @@ c_vec1 = zeros(1,nreal);
 c_vec2 = zeros(1,nreal);
 
 if(rand(1) <= pcross_real) 
+% if(randomperc() <= pcross_real) % SLOW !!!
     % ncross = ncross + 1 ;
     if(nreal < 10)        
         [c_vec1, c_vec2] = sbx_looped(p_vec1, p_vec2, ...
@@ -37,6 +38,7 @@ function [c_vec1, c_vec2] = sbx_looped(p_vec1, p_vec2, ...
 nreal = length(p_vec1);
 for i = 1:nreal
    if (rand(1) <= 0.5)
+   % if (randomperc() <= 0.5) % SLOW !!!
        if (abs(p_vec1(i) - p_vec2(i)) > epsilon)
             if (p_vec1(i) < p_vec2(i))
                 y1 = p_vec1(i) ;
@@ -48,6 +50,7 @@ for i = 1:nreal
             yl = min_realvar(i);
             yu = max_realvar(i);
             r = rand(1) ;
+            % r = randomperc() ; % SLOW !!!
             beta_ = 1.0 + (2.0 * (y1 - yl) / (y2 - y1));
             alpha_ = 2.0 - (beta_ ^ (-1.0 * (eta_c + 1.0)));            
             if (r <= (1.0 / alpha_))
@@ -77,6 +80,7 @@ for i = 1:nreal
                 c2 = yu;
             end				
             if (rand(1) <= 0.5)
+            % if (randomperc() <= 0.5) % SLOW !!!
                 c_vec1(i) = c2;
                 c_vec2(i) = c1;
             else
@@ -106,6 +110,7 @@ function [c_vec1, c_vec2] = sbx_vectorized(p_vec1, p_vec2, ...
 % problems)
 nreal = length(p_vec1);
 randv1lthalf = rand(1,nreal) <  0.5 ;    
+% randv1lthalf = randompercv(1,nreal) <  0.5 ; % SLOW !!!
 absdiffgteps = abs(p_vec1 - p_vec2) > (zeros(1,nreal) * epsilon) ;    
 xover_index = randv1lthalf & absdiffgteps ;
 abs_xover_index = (1:length(xover_index));
@@ -116,7 +121,9 @@ len = length(p1);
 if(len > 0)
     eta_cv = ones(1, len) * eta_c ;
     rv = rand(1,len);       
+    % rv = randompercv(1,len); % SLOW !!!
     randv2lthalf = rand(1,len) < 0.5 ;
+    % randv2lthalf = randompercv(1,len) < 0.5 ; % SLOW !!!
     %
     pveclt = p1 < p2 ;
     y1v = p1 .* pveclt + p2 .* (~pveclt);

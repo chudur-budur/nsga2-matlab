@@ -14,6 +14,7 @@ global eta_c ;
 [popsize,~] = size(old_pop);
 
 old_pop =  old_pop(randperm(end),:);
+% old_pop =  shuffle(old_pop); % SLOW !!!
 for i = 1:4:popsize    
     p1i = tournament(old_pop,i,  i+1);
     p2i = tournament(old_pop,i+2,i+3);
@@ -30,3 +31,12 @@ for i = 1:4:popsize
 end
 end
 
+function [shuffled_pop] = shuffle(pop)
+%   This function uses the legacy rng for shuffling,
+%   but too slow.
+    [popsize,cols] = size(pop);
+    shuffled_pop = zeros(popsize,cols);
+    for i = 1:popsize
+        shuffled_pop(i,:) = pop(rnd(1,popsize),:);
+    end
+end

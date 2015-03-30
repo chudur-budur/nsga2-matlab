@@ -19,6 +19,7 @@ function [pvec] = polymut_looped(pvec, pmut_real, eta_m, ...
 nreal = length(pvec);
 for j = 1:nreal
     if (rand(1) <= pmut_real)
+    % if (randomperc() <= pmut_real) % SLOW !!!
         y = pvec(j);
         yl = min_realvar(j);
         yu = max_realvar(j);
@@ -26,6 +27,7 @@ for j = 1:nreal
         delta2 = (yu-y)/(yu-yl);
         mut_pow = 1.0/(eta_m + 1.0);
         r = rand(1) ;
+        % r = randomperc() ; % SLOW !!!
         if (r <= 0.5)
             xy = 1.0 - delta1;
             val = 2.0 * r + (1.0 - 2.0 * r) * (xy ^ (eta_m + 1.0));
@@ -55,6 +57,7 @@ function [pvec] = polymut_vectorized(pvec, pmut_real, eta_m, ...
 
 nreal = length(pvec);
 mut_index = rand(1,nreal) < pmut_real ;
+% mut_index = randompercv(1,nreal) < pmut_real ; % SLOW !!!
 abs_mut_index = 1:nreal ;
 abs_mut_index = abs_mut_index(mut_index);
 mlen = length(abs_mut_index);
@@ -68,6 +71,7 @@ if(mlen > 0)
     delta2v = (yuv - yv) ./ (yuv - ylv);
     mut_powv = 1.0 ./ (eta_mv + 1.0);
     rv = rand(1, mlen); % r2s ;
+    % rv = randompercv(1, mlen); % r2s ; % SLOW !!!
     rvlthalf = rv < 0.5 ;
     valv1 = 2.0 .* rv + (1.0 - 2.0 .* rv) .* ...
                         ((1.0 - delta1v) .^ (eta_mv + 1.0));    
