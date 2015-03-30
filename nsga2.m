@@ -33,7 +33,7 @@ parent_pop = evaluate_pop(parent_pop, obj_func);
 parent_pop = assign_rank_and_crowding_distance(parent_pop);
 
 % plot the pareto front
-% plotpf(1, parent_pop, false);
+plotpf(1, parent_pop, false);
 
 for i = 2:ngen
     fprintf('gen = %d\n', i)
@@ -45,7 +45,7 @@ for i = 2:ngen
     parent_pop = fill_nondominated_sort(mixed_pop);
     
     % plot the current pareto front
-    % plotpf(i, parent_pop);    
+    plotpf(i, parent_pop, false);    
 end
 fprintf('Generations finished, now reporting solutions\n');
 fprintf('Routine successfully exited\n');
