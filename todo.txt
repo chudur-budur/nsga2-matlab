@@ -4,4 +4,5 @@
 3. write a function for plotting ps+pf
 4. output file handling
 5. re-write the rng from the original c code
+6. keep one global copy of the dom_mat and reuse it during the selection
 6. compare with nsga2-c, ecj, moea-framework, jemtal, paradiseo
