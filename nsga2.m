@@ -15,7 +15,7 @@ global ncon ;
 global ngen ;
 
 % load algorithm parameters
-load_input_data('input_data/osy.in');
+load_input_data('input_data/zdt4.in');
 pprint('\nInput data successfully entered, now performing initialization\n\n');
 
 % for debugging puproses 
@@ -29,9 +29,12 @@ pprint('\nInput data successfully entered, now performing initialization\n\n');
 obj_col = nreal + 1 : nreal + nobj ;
 
 % this is the objective function that we are going to optimize
-obj_func = @osy ;
+obj_func = @zdt4 ;
 child_pop = zeros(popsize, nreal + nobj + ncon + 3);
 mixed_pop = zeros(2 * popsize, nreal + nobj + ncon + 3);
+
+% switch to save file, if true, the code becomes slow
+save_file = false ;
 
 tic;
 % initialize population
@@ -40,8 +43,14 @@ pprint('Initialization done, now performing first generation\n\n');
 parent_pop = evaluate_pop(parent_pop, obj_func);
 parent_pop = assign_rank_and_crowding_distance(parent_pop);
 
+% save into file
+if(save_file)
+    rank_col = nreal + nobj + ncon + 2 ;
+    dlmwrite('all_pop.out', sortrows(parent_pop, rank_col));
+end
+
 % plot the pareto front
-show_plot(1, parent_pop, false);
+show_plot(1, parent_pop, false, [2 3 4]);
 
 for i = 2:ngen
     fprintf('gen = %d\n', i)
@@ -53,8 +62,18 @@ for i = 2:ngen
     parent_pop = fill_nondominated_sort(mixed_pop);
     
     % plot the current pareto front
-    show_plot(i, parent_pop, false);    
+    show_plot(i, parent_pop, false, [2 3 4]);    
+    
+    % save the parent_pop into file
+    if(save_file)       
+        dlmwrite('all_pop.out', sortrows(parent_pop, rank_col), '-append');
+    end
 end
 fprintf('Generations finished, now reporting solutions\n');
 fprintf('Routine successfully exited\n');
 toc;
+
+if(save_file)    
+    dlmwrite('best_pop.out', parent_pop(parent_pop(:,rank_col) == 1,:));
+    dlmwrite('final_pop.out', sortrows(parent_pop, nreal+nobj+ncon+2));
+end

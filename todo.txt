@@ -1,5 +1,4 @@
 1. write all benchmark test functions
-2. write a function for plotting ps+pf
 3. output file handling
 4. compare with nsga2-c, ecj, moea-framework, jemtal, paradiseo
 5. test betaq computation with bsxfun in real_cross
