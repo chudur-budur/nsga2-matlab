@@ -3,7 +3,7 @@ function show_plot(gen, pop, varargin)
 %   gen = generation count
 %   pop = population at generation gen
 %   optional parameters:
-%       showval = will show values for each point on the plot, boolean
+%       is_text = will show values for each point on the plot, boolean
 %       xlist = list of variables to be plotted for the pareto set
 %       flist = list of objectives to plot, when nobj > 3
 
