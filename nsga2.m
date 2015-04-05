@@ -34,6 +34,11 @@ obj_func = @zdt1 ;
 child_pop = zeros(popsize, nreal + nobj + ncon + 3);
 mixed_pop = zeros(2 * popsize, nreal + nobj + ncon + 3);
 
+% you need to warm-up the cache if you need to do profiling
+% for k = 1:50000
+%     tic(); elapsed = toc();
+% end
+
 tic;
 % initialize population
 parent_pop = initialize_pop(0.12345);
@@ -44,7 +49,7 @@ parent_pop = assign_rank_and_crowding_distance(parent_pop);
 % plot the pareto front
 show_plot(1, parent_pop, false, [2 3 4]);
 
-do_save = true ;
+do_save = false ;
 % save the current pop
 if(do_save)
     save_pop(1, parent_pop, false);
@@ -67,9 +72,8 @@ for i = 2:ngen
         save_pop(i, parent_pop, false);
     end
 end
-fprintf('Generations finished, now reporting solutions\n');
-fprintf('Routine successfully exited\n');
 toc;
+fprintf('Generations finished, now reporting solutions\n');
 
 if(do_save)
     % save the final pop
@@ -77,3 +81,4 @@ if(do_save)
     % save the best pop
     save_pop(i, parent_pop, false, 'best');
 end
+fprintf('Routine successfully exited\n');
