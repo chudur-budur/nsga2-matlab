@@ -15,7 +15,7 @@ global ncon ;
 global ngen ;
 
 % load algorithm parameters
-load_input_data('input_data/sch2.in');
+load_input_data('input_data/zdt5.in'); return ;
 pprint('\nInput data successfully entered, now performing initialization\n\n');
 
 % for debugging puproses 
