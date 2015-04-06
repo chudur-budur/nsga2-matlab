@@ -15,7 +15,7 @@ global ncon ;
 global ngen ;
 
 % load algorithm parameters
-load_input_data('input_data/pol.in');
+load_input_data('input_data/sch2.in');
 pprint('\nInput data successfully entered, now performing initialization\n\n');
 
 % for debugging puproses 
@@ -30,7 +30,7 @@ pprint('\nInput data successfully entered, now performing initialization\n\n');
 obj_col = nreal + 1 : nreal + nobj ;
 
 % this is the objective function that we are going to optimize
-obj_func = @pol ;
+obj_func = @sch2 ;
 child_pop = zeros(popsize, nreal + nobj + ncon + 3);
 mixed_pop = zeros(2 * popsize, nreal + nobj + ncon + 3);
 
