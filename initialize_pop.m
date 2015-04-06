@@ -14,11 +14,11 @@ global nobj ;
 global ncon ;
 global min_realvar ;
 global max_realvar ;
-% global seed ; % Knuth's algo, SLOW !!!
 
 % init rng
 rng(rseed, 'twister');
 
+% global seed ; % Knuth's algo, SLOW !!!
 % seed = rseed ;
 % randomize(); % SLOW !!!
 

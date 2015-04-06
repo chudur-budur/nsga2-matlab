@@ -15,7 +15,7 @@ global ncon ;
 global ngen ;
 
 % load algorithm parameters
-load_input_data('input_data/zdt1.in');
+load_input_data('input_data/pol.in');
 pprint('\nInput data successfully entered, now performing initialization\n\n');
 
 % for debugging puproses 
@@ -23,14 +23,14 @@ pprint('\nInput data successfully entered, now performing initialization\n\n');
 % global max_realvar ;
 % popsize = 4 ;
 % nreal = 3 ;
-% ngen = 10;
+% ngen = 400 ;
 % min_realvar = min_realvar(1:nreal);
 % max_realvar = max_realvar(1:nreal);
 
 obj_col = nreal + 1 : nreal + nobj ;
 
 % this is the objective function that we are going to optimize
-obj_func = @zdt1 ;
+obj_func = @pol ;
 child_pop = zeros(popsize, nreal + nobj + ncon + 3);
 mixed_pop = zeros(2 * popsize, nreal + nobj + ncon + 3);
 
@@ -47,7 +47,7 @@ parent_pop = evaluate_pop(parent_pop, obj_func);
 parent_pop = assign_rank_and_crowding_distance(parent_pop);
 
 % plot the pareto front
-show_plot(1, parent_pop, false, [2 3 4]);
+show_plot(1, parent_pop, false, [1 2 3]);
 
 do_save = false ;
 % save the current pop
@@ -65,7 +65,7 @@ for i = 2:ngen
     parent_pop = fill_nondominated_sort(mixed_pop);
     
     % plot the current pareto front
-    show_plot(i, parent_pop, false, [2 3 4]);        
+    show_plot(i, parent_pop, false, [1 2 3]);        
     
     % save the current pop
     if(do_save)

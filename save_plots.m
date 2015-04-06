@@ -11,7 +11,7 @@ global ngen ;
 global nreal ;
 global ncon ;
 
-xlist = [1 2 3]; % set of design variables to plot
+xlist = [1 3 4]; % set of design variables to plot
 flist = 1 : nobj; % set of objectives to plot
 data = [];
             
@@ -23,8 +23,8 @@ end
 
 fpos = get(gcf, 'Position');
 set(gcf,'Position',[fpos(1) fpos(2) 1000 400]);
-set(gcf,'color','w');
-set(gcf, 'visible', 'off');
+set(gcf,'Color','w');
+set(gcf, 'Visible', 'on');
 for gen = 1:ngen
     eval(sprintf('data = gen_%d;', gen));
     data = [ ...
@@ -38,3 +38,5 @@ for gen = 1:ngen
     set(gcf, 'PaperSize', [10 4]); 
     saveas(gcf, sprintf('plots/gen_%d', gen), 'pdf');
 end
+
+clear all ;

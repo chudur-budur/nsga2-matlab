@@ -1,4 +1,4 @@
-function [pobj] = show_plot(gen, pop, varargin)
+function [] = show_plot(gen, pop, varargin)
 %   This function plots the front, stolen from KeLi and Zhanghu's code.
 %   gen = generation count
 %   pop = population at generation gen
@@ -48,7 +48,7 @@ function [pobj] = show_plot(gen, pop, varargin)
         subplot(1,2,1);
     end
     if nobj == 2
-        pobj = plot(f(:,1), f(:,2), 'ro', 'MarkerSize', 4);
+        plot(f(:,1), f(:,2), 'ro', 'MarkerSize', 4);
         xlabel('f1', 'FontSize', 6);
         ylabel('f2', 'FontSize', 6);
         if(p.Results.is_text)
@@ -56,7 +56,7 @@ function [pobj] = show_plot(gen, pop, varargin)
             text(f(:,1), f(:,2), strValues, 'VerticalAlignment', 'bottom');
         end
     else        
-        pobj = plot3(f(:,1), f(:,2), f(:,3), ...
+        plot3(f(:,1), f(:,2), f(:,3), ...
                             'ro', 'MarkerSize', 4);        
         xlabel(sprintf('f%d', flist(1)), 'FontSize', 6);
         ylabel(sprintf('f%d', flist(2)), 'FontSize', 6);
@@ -75,7 +75,7 @@ function [pobj] = show_plot(gen, pop, varargin)
     if(~isempty(p.Results.xlist))
         subplot(1,2,2);
         if(length(xlist) == 2)
-            pobj = plot(x(:,1), x(:,2), 'ro', 'MarkerSize', 4);
+            plot(x(:,1), x(:,2), 'ro', 'MarkerSize', 4);
             xlabel('x1', 'FontSize', 6);
             ylabel('x2', 'FontSize', 6);
             if(p.Results.is_text)
@@ -85,7 +85,7 @@ function [pobj] = show_plot(gen, pop, varargin)
                                 'VerticalAlignment', 'bottom');
             end
         else
-            pobj = plot3(x(:,1), x(:,2), x(:,3), ...
+            plot3(x(:,1), x(:,2), x(:,3), ...
                             'ro', 'MarkerSize', 4);        
             xlabel(sprintf('x%d', xlist(1)), 'FontSize', 6);
             ylabel(sprintf('x%d', xlist(2)), 'FontSize', 6);

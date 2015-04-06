@@ -3,7 +3,7 @@ function [rmat] = randompercv(row, col)
 
 rmat = zeros(row, col);
 for r = 1:row
-    for c = 1:col
+    for c = 1:col        
         rmat(r,c) = randomperc();
     end
 end
