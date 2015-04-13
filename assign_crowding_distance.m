@@ -4,9 +4,17 @@ function [ pop ] = assign_crowding_distance(pop, pf_indices)
 %   vectorized translation from the original nsga-2 c-code.
  
 global nreal ;
+global nbin ;
+global nbits ;
 global nobj ;
 
-obj_col = nreal + 1 : nreal + nobj ;
+if(nreal > 0)
+    obj_col = nreal + 1 : nreal + nobj ;
+    obj_offset = nreal ;    
+elseif(nbin > 0)
+    obj_col = sum(nbits) + 1 : sum(nbits) + nobj ;
+    obj_offset = sum(nbits);
+end
 
 % clear the CD values.
 pop(pf_indices,end) = 0 ;
@@ -43,7 +51,7 @@ if(len == 1 || len == 2)
 elseif(len == 3)
     front = pop(pf_indices,:);
     for f = 1:nobj
-        sorted_front = sortrows(front, nreal + f);
+        sorted_front = sortrows(front, obj_offset + f);
         % set the boundary values to inf
         sorted_front(1,end) = inf ;
         sorted_front(end,end) = inf ;
@@ -56,12 +64,12 @@ else
     fmax = max(front(:,obj_col));
     fmin = min(front(:,obj_col));
     for f = 1:nobj
-        sorted_front = sortrows(front, nreal + f);
+        sorted_front = sortrows(front, obj_offset + f);
         % set the boundary values to inf
         sorted_front(1,end) = inf ;
         sorted_front(end,end) = inf ;
         % get the obj values only
-        objvals = sorted_front(:, nreal+1:nreal+nobj);    
+        objvals = sorted_front(:, obj_col);    
         % normalize the values
         objvals = bsxfun(@times, bsxfun(@minus, objvals, fmin),... 
                                     1./abs(fmax - fmin));    

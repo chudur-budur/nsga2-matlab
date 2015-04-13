@@ -10,29 +10,46 @@ addpath(genpath('./rand'));         % this is where all the legacy rng related s
 % global variables that may be used here
 global popsize ;
 global nreal ;
+global nbin ;
+global nbits ;
 global nobj ;
 global ncon ;
 global ngen ;
 
 % load algorithm parameters
-load_input_data('input_data/zdt5.in'); return ;
+load_input_data('input_data/zdt5.in');
 pprint('\nInput data successfully entered, now performing initialization\n\n');
 
 % for debugging puproses 
 % global min_realvar ;
 % global max_realvar ;
-% popsize = 4 ;
+popsize = 24 ;
 % nreal = 3 ;
 % ngen = 400 ;
 % min_realvar = min_realvar(1:nreal);
 % max_realvar = max_realvar(1:nreal);
+global min_binvar ;
+global max_binvar ;
+nbin = 2;
+nbits = [3;3];
+min_binvar = [0;0];
+max_binvar = [5;5];
 
-obj_col = nreal + 1 : nreal + nobj ;
+if(nreal > 0)
+    obj_col = nreal + 1 : nreal + nobj ;
+elseif(nbin > 0)
+    obj_col = sum(nbits) + 1 : sum(nbits) + nobj ;
+end
 
 % this is the objective function that we are going to optimize
-obj_func = @sch2 ;
-child_pop = zeros(popsize, nreal + nobj + ncon + 3);
-mixed_pop = zeros(2 * popsize, nreal + nobj + ncon + 3);
+obj_func = @zdt5 ;
+if(nreal > 0)
+    child_pop = zeros(popsize, nreal + nobj + ncon + 3);
+    mixed_pop = zeros(2 * popsize, nreal + nobj + ncon + 3);
+elseif(nbin > 0)
+    child_pop = zeros(popsize, sum(nbits) + nobj + ncon + 3);
+    mixed_pop = zeros(2 * popsize, sum(nbits) + nobj + ncon + 3);
+end
 
 % you need to warm-up the cache if you need to do profiling
 % for k = 1:50000
@@ -44,7 +61,7 @@ tic;
 parent_pop = initialize_pop(0.12345);
 pprint('Initialization done, now performing first generation\n\n');
 parent_pop = evaluate_pop(parent_pop, obj_func);
-parent_pop = assign_rank_and_crowding_distance(parent_pop);
+parent_pop = assign_rank_and_crowding_distance(parent_pop)
 
 % plot the pareto front
 show_plot(1, parent_pop, false, [1 2 3]);

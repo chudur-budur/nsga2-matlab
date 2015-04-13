@@ -1,6 +1,6 @@
 function [parent_pop] = zdt4(parent_pop)
-%   This procedure implements zdt3 function.
-%   The canonical zdt3 function is defined as below --
+%   This procedure implements zdt4 function.
+%   The canonical zdt4 function is defined as below --
 %   f_1 = x_1
 %   f_2 = g * h
 %   g(x_2, x_3, ..., x_n) = 91.0 + sum_{i = 2}^n x_i^2 - 10 * cos(4 * pi * x_i)

@@ -2,10 +2,17 @@ function [pop] = assign_rank_only(pop)
 %   This function assigns only rank but no crowding distance
 
 global nreal ;
+global nbin ;
+global nbits ;
 global nobj ;
 global ncon ;
 
-rank_col = nreal + nobj + ncon + 2 ;
+if(nreal > 0)
+    rank_col = nreal + nobj + ncon + 2 ;
+elseif(nbin > 0)
+    rank_col = sum(nbits) + nobj + ncon + 2 ;
+end
+
 [popsize, ~] = size(pop);
 
 all_indices = 1:popsize; % initially start with the whole population
