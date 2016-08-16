@@ -1,8 +1,8 @@
 
-% clear all workspace variables
+%% clear all workspace variables
 clear ;
 
-% this is where all the algorithm parameters are
+%% this is where all the algorithm parameters are
 addpath(genpath('./input_data'));   
 % this is where all the problems are defined
 addpath(genpath('./problemdef'));   
@@ -10,7 +10,7 @@ addpath(genpath('./problemdef'));
 % THIS IS NOT VECTORIZED, SO DO NOT USE, SLOW !!!
 addpath(genpath('./rand'));         
 
-% global variables that may be used here
+%% global variables that may be used here
 global popsize ;
 global nreal ;
 global nbin ;
@@ -19,11 +19,11 @@ global nobj ;
 global ncon ;
 global ngen ;
 
-% load algorithm parameters
-load_input_data('input_data/deb2dk.in');
+%% load algorithm parameters
+load_input_data('input_data/zdt4.in');
 pprint('\nInput data successfully entered, now performing initialization\n\n');
 
-% for debugging puproses 
+%% for debugging puproses 
 % global min_realvar ;
 % global max_realvar ;
 % popsize = 24 ;
@@ -44,8 +44,10 @@ elseif(nbin > 0)
     obj_col = sum(nbits) + 1 : sum(nbits) + nobj ;
 end
 
-% this is the objective function that we are going to optimize
-obj_func = @deb2dk ;
+%% this is the objective function that we are going to optimize
+obj_func = @zdt4 ;
+
+%% allocate memory for pops
 if(nreal > 0)
     child_pop = zeros(popsize, nreal + nobj + ncon + 3);
     mixed_pop = zeros(2 * popsize, nreal + nobj + ncon + 3);
@@ -54,11 +56,12 @@ elseif(nbin > 0)
     mixed_pop = zeros(2 * popsize, sum(nbits) + nobj + ncon + 3);
 end
 
-% you need to warm-up the cache if you need to do profiling
+%% you need to warm-up the cache if you need to do profiling
 % for k = 1:50000
 %     tic(); elapsed = toc();
 % end
 
+%% start nsga2
 tic;
 % initialize population
 parent_pop = initialize_pop(90);
@@ -66,14 +69,13 @@ pprint('Initialization done, now performing first generation\n\n');
 parent_pop = evaluate_pop(parent_pop, obj_func);
 parent_pop = assign_rank_and_crowding_distance(parent_pop);
 
+do_plot = false ;
 % plot the pareto front
-show_plot(1, parent_pop, false, [1 2 3]);
+if(do_plot); show_plot(1, parent_pop, false, [1 2 3]); end;
 
-do_save = true ;
+do_save = false ;
 % save the current pop
-if(do_save)
-    save_pop(1, parent_pop, false);
-end
+if(do_save); save_pop(1, parent_pop, false); end;
 
 for i = 2:ngen
     fprintf('gen = %d\n', i)
@@ -85,13 +87,14 @@ for i = 2:ngen
     parent_pop = fill_nondominated_sort(mixed_pop);
     
     % plot the current pareto front
-    % show_plot(i, parent_pop, false, [1 2 3], [], [0.0, 1.0], [0.0, 1.0]);
-    show_plot(i, parent_pop, false, [1 2 3]);
+    % if(do_plot) 
+    %   show_plot(i, parent_pop, false, [1 2 3], [], ...
+    %       [0.0, 1.0], [0.0, 1.0]); 
+    % end;
+    if(do_plot); show_plot(i, parent_pop, false, [1 2 3]); end;
     
     % save the current pop
-    if(do_save)
-        save_pop(i, parent_pop, false);
-    end
+    if(do_save); save_pop(i, parent_pop, false); end;
 end
 toc;
 fprintf('Generations finished, now reporting solutions\n');
