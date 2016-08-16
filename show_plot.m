@@ -14,12 +14,15 @@ function [] = show_plot(gen, pop, varargin)
     addRequired(p, 'gen', @isnumeric);
     addRequired(p, 'pop', @ismatrix);
     addOptional(p, 'is_text', false, @islogical);
-    addOptional(p, 'xlist', [], @isvector);
-    addOptional(p, 'flist', [], @isvector);
+    addOptional(p, 'xlist', [], @(x) isvector(x) || isempty(x));
+    addOptional(p, 'flist', [], @(x) isvector(x) || isempty(x));
+    addOptional(p, 'xlim_', [], @(x) isvector(x) || isempty(x));
+    addOptional(p, 'ylim_', [], @(x) isvector(x) || isempty(x));
+    addOptional(p, 'zlim_', [], @(x) isvector(x) || isempty(x));
     parse(p, gen, pop, varargin{:});
     
     if(nobj == 2)
-        f = p.Results.pop(:,nreal + [1 2]); 
+        f = p.Results.pop(:, nreal + [1 2]); 
     elseif(isempty(p.Results.flist))
         f = p.Results.pop(:, nreal + [1 2 3]);
         flist = [1 2 3] ;
@@ -47,10 +50,14 @@ function [] = show_plot(gen, pop, varargin)
     if(~isempty(p.Results.xlist))
         subplot(1,2,1);
     end
+    
+    % plot objectives
     if nobj == 2
         plot(f(:,1), f(:,2), 'ro', 'MarkerSize', 4);
         xlabel('f1', 'FontSize', 6);
         ylabel('f2', 'FontSize', 6);
+        if(~isempty(p.Results.xlim_)); xlim(p.Results.xlim_); end;
+        if(~isempty(p.Results.ylim_)); ylim(p.Results.ylim_); end;
         if(p.Results.is_text)
             strValues = strtrim(cellstr(num2str([f(:,1) f(:,2)],'(%.4f,%.4f)')));
             text(f(:,1), f(:,2), strValues, 'VerticalAlignment', 'bottom');
@@ -61,6 +68,9 @@ function [] = show_plot(gen, pop, varargin)
         xlabel(sprintf('f%d', flist(1)), 'FontSize', 6);
         ylabel(sprintf('f%d', flist(2)), 'FontSize', 6);
         zlabel(sprintf('f%d', flist(3)), 'FontSize', 6);
+        if(~isempty(p.Results.xlim_)); xlim(p.Results.xlim_); end;
+        if(~isempty(p.Results.ylim_)); ylim(p.Results.ylim_); end;
+        if(~isempty(p.Results.zlim_)); zlim(p.Results.zlim_); end;
         if(p.Results.is_text)
             strValues = strtrim(cellstr(num2str([f(:,1) f(:,2) f(:,3)],...
                                             '(%.4f,%.4f,%.4f)')));
@@ -71,7 +81,8 @@ function [] = show_plot(gen, pop, varargin)
     title(fstr, 'FontSize', 8);
     box on;
     drawnow;
-    
+
+    % plot variables
     if(~isempty(p.Results.xlist))
         subplot(1,2,2);
         if(length(xlist) == 2)
@@ -89,7 +100,7 @@ function [] = show_plot(gen, pop, varargin)
                             'ro', 'MarkerSize', 4);        
             xlabel(sprintf('x%d', xlist(1)), 'FontSize', 6);
             ylabel(sprintf('x%d', xlist(2)), 'FontSize', 6);
-            zlabel(sprintf('x%d', xlist(3)), 'FontSize', 6);
+            zlabel(sprintf('x%d', xlist(3)), 'FontSize', 6);            
             if(p.Results.is_text)
                 strValues = strtrim(cellstr(...
                         num2str([x(:,1) x(:,2) x(:,3)],...
