@@ -12,7 +12,7 @@ Do these later
   3. fine tune the data saving script save_plots.m
     - axis font and size, for latex.
     - reduce extra borders.
-    - if possible, get rid off the show_plots function totally.
-    - look closely into gcf, gca, gco craps.
-  4. test betaq computation with bsxfun in real_cross, also couple of other statements that can be optimized with bsxfun.
-  5. vectorize the functions in 'rand' or call the c functions using mex.
+    - if possible, get rid off the `show_plots` function totally.
+    - look closely into `gcf`, `gca`, `gco` craps.
+  4. test `betaq` computation with `bsxfun` in `real_cross`, also couple of other statements that can be optimized with `bsxfun`.
+  5. vectorize the functions in `rand` or call the `c` functions using `mex`.
