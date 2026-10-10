@@ -6,7 +6,7 @@ function [parent_pop] = zdt6(parent_pop)
 %
 %   This procedure implements zdt6 function.
 %   The canonical zdt6 function is defined as below --
-%   f_1 = 1.0 - exp(-4.0 * x_1) * sin(6 * pi * x_1)
+%   f_1 = 1.0 - exp(-4.0 * x_1) * sin(6 * pi * x_1)^6
 %   f_2 = g * (1.0 - (f_1/g)^2)
 %   g(x_2, x_3, ..., x_n) = 1.0 + 9.0 * ((sum_{i = 2}^n x_i)/9.0)^0.25
 %   0 <= x_i <= 1.0 (i = 1, 2, 3, ..., n)
