@@ -54,7 +54,6 @@ if(cdist2 > cdist1)
 end
 % still a tie, pick one at random
 if(rand(1) < 0.5)
-% if(randomperc() < 0.5) % SLOW !!!
     sindex = index1 ;
     return ;
 else
