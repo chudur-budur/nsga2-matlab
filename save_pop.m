@@ -1,4 +1,10 @@
 function [] = save_pop(gen, current_pop, varargin)
+%SAVE_POP  Saves a population to text (.out) and MATLAB (.mat) files.
+%
+%   save_pop(gen, current_pop)
+%   save_pop(gen, current_pop, is_burst)
+%   save_pop(gen, current_pop, is_burst, extra)
+%
 %   This function saves the pop in a file/matrix
 %   parameters:
 %       gen = current generation
@@ -6,6 +12,24 @@ function [] = save_pop(gen, current_pop, varargin)
 %       is_burst = dump everything in one file or not, boolean
 %       extra_options = to save the final pop, say 'final'
 %                       to save the best pop, say 'best'
+%
+%   Files written in the current folder:
+%       extra = 'final'   -> final_pop.out, final_pop.mat (final_pop)
+%       extra = 'best'    -> best_pop.out, best_pop.mat (best_pop),
+%                            rank 1 individuals only
+%       is_burst = false  -> all_pop.out and all_pop.mat, one
+%                            gen_<gen> variable per generation,
+%                            overwritten when gen == 1
+%       is_burst = true   -> snapshots/all_pop_gen_<gen>.out, one file
+%                            per generation, the folder is cleared
+%                            when gen == 1
+%
+%   The saved rows are sorted by rank, and the columns are reordered
+%   like this --
+%       [ objs | cons | vars | cv | rank | crowd-dist ]
+%
+%   Globals used:
+%       nreal, nobj, ncon, nbin
 
 global nreal ;
 global nobj ;
@@ -13,6 +37,7 @@ global ncon ;
 
 rank_col = nreal + nobj + ncon + 2 ;
 
+% move objs and cons before the vars, the last 3 columns stay in place
 pop = [current_pop(:, nreal + 1 : nreal + nobj), ...
         current_pop(:, nreal + nobj + 1 : nreal + nobj + ncon), ...
         current_pop(:, 1 : nreal), ...

@@ -1,4 +1,9 @@
 function [parent_pop] = kur(parent_pop)
+%KUR  Kursawe's test problem, 2 objectives.
+%
+%   parent_pop = kur(parent_pop) evaluates every row of
+%   parent_pop at once.
+%
 %   This procedure implements Kursawe's function.
 %   The canonical Kursawe's function is defined as below --
 %
@@ -6,6 +11,10 @@ function [parent_pop] = kur(parent_pop)
 %   f_2 = sum_{i = 1}^3 [|x_i|^0.8 + 5.0 * sin(x_i^3)]
 %   where
 %       -5.0 <= x_i <= 5.0 (i = 1, 2, 3)
+%
+%   The objectives are written into columns nreal+1 : nreal+nobj.
+%
+%   Use it with input_data/kur.in.
 
 global nreal ;
 

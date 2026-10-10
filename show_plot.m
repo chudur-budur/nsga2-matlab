@@ -1,4 +1,9 @@
 function [] = show_plot(gen, pop, varargin)
+%SHOW_PLOT  Plots the objective space, and optionally the variable space.
+%
+%   show_plot(gen, pop)
+%   show_plot(gen, pop, is_text, xlist, flist, xlim_, ylim_, zlim_)
+%
 %   This function plots the front, stolen from KeLi and Zhanghu's code.
 %   gen = generation count
 %   pop = population at generation gen
@@ -6,6 +11,19 @@ function [] = show_plot(gen, pop, varargin)
 %       is_text = will show values for each point on the plot, boolean
 %       xlist = list of variables to be plotted for the pareto set
 %       flist = list of objectives to plot, when nobj > 3
+%       xlim_, ylim_, zlim_ = axis limits of the objective plot,
+%                             [min max], empty means automatic
+%
+%   With 2 objectives the front is a 2-d plot, otherwise a 3-d plot of
+%   the objectives in flist (the first 3 by default). If xlist is
+%   given, the figure is split in two and the right subplot shows the
+%   variables in xlist (2 or 3 of them).
+%
+%   It draws on the current figure (gcf) and calls drawnow, so calling
+%   it every generation gives an animation.
+%
+%   Globals used:
+%       nreal, nobj
 
     global nreal ;
     global nobj ;

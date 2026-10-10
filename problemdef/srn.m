@@ -1,4 +1,9 @@
 function [parent_pop] = srn(parent_pop)
+%SRN  Srinivas and Deb's test problem, 2 objectives, 2 constraints.
+%
+%   parent_pop = srn(parent_pop) evaluates every row of
+%   parent_pop at once.
+%
 %   This procedure implements srn (Srinivas and Deb's) function.
 %   The canonical srn function is defined as below --
 %       f1 = 2.0 + ((x_1 - 2.0)^2.0) + ((x_2 - 1.0)^2.0)
@@ -8,6 +13,13 @@ function [parent_pop] = srn(parent_pop)
 %           c_2(x) = (3.0 * x_2/10.0) - (x_1/10.0) - 1.0
 %       where
 %           -20.0 <= x_i <= 20.0    (i = 1,2)
+%
+%   The objectives are written into columns nreal+1 : nreal+nobj.
+%   The constraints are written into columns
+%   nreal+nobj+1 : nreal+nobj+ncon, normalized so that a value
+%   >= 0 means the constraint is satisfied.
+%
+%   Use it with input_data/srn.in.
 
 global nreal ;
 global ncon ;

@@ -1,4 +1,9 @@
 function [parent_pop] = pol(parent_pop)
+%POL  Poloni's test problem, 2 objectives.
+%
+%   parent_pop = pol(parent_pop) evaluates every row of
+%   parent_pop at once.
+%
 %   This procedure implements Poloni's function.
 %   The canonical Poloni's function is defined as below --
 %
@@ -11,6 +16,10 @@ function [parent_pop] = pol(parent_pop)
 %       B2(x) = 1.5sin(x_1) - cos(x_1) + 2sin(x_2) - 0.5cos(x_2)
 %   where
 %       -3.15 <= x_i <= 3.15 (i = 1, 2)
+%
+%   The objectives are written into columns nreal+1 : nreal+nobj.
+%
+%   Use it with input_data/pol.in.
 
 global nreal ;
 

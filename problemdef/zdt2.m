@@ -1,10 +1,19 @@
 function [parent_pop] = zdt2(parent_pop)
+%ZDT2  ZDT2 test problem, 2 objectives, non-convex front.
+%
+%   parent_pop = zdt2(parent_pop) evaluates every row of
+%   parent_pop at once.
+%
 %   This procedure implements zdt2 function.
 %   The canonical zdt2 function is defined as below --
 %   f_1 = x_1
 %   f_2 = g * (1.0 - (f_1/g)^2)
 %   g(x_2, x_3, ..., x_n) = 1.0 + (9/(n - 1)) sum_{i = 2}^n x_i
 %   0 <= x_i <= 1.0 (i = 1, 2, 3, ..., n)
+%
+%   The objectives are written into columns nreal+1 : nreal+nobj.
+%
+%   Use it with input_data/zdt2.in.
 
 
 global nreal ;

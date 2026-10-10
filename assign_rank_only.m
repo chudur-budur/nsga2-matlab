@@ -1,5 +1,19 @@
 function [pop] = assign_rank_only(pop)
-%   This function assigns only rank but no crowding distance
+%ASSIGN_RANK_ONLY  Non-dominated sort without the crowding distance.
+%
+%   pop = assign_rank_only(pop) assigns only rank but no crowding
+%   distance, then sorts the rows by rank (rank 1 first). The fronts
+%   are found the same way as in assign_rank_and_crowding_distance().
+%
+%   Used by fill_nondominated_sort(), which computes the crowding
+%   distance only for the fronts that it keeps.
+%
+%   Input/Output:
+%       pop = population matrix, the rank column is filled in and the
+%             rows are sorted by it
+%
+%   Globals used:
+%       nreal, nbin, nbits, nobj, ncon
 
 global nreal ;
 global nbin ;
@@ -24,6 +38,7 @@ dominance_matrix = generate_dominance_matrix(... % It's fast now
 front = 1 ; % initial front is 1
 while (not(isempty(all_indices)))
 % for i = 1:1
+    % now reduce the dom_mat to the unranked rows and columns
     dom_mat = [all_indices.', dominance_matrix(all_indices, all_indices+1)];
     % get the indices of the current pf
     minus_one_count = [all_indices.', sum(dom_mat == -1,2)] ;

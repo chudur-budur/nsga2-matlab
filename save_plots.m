@@ -1,6 +1,18 @@
-% Script to make plots from all the snapshots 
-% This script is not tuned well, there are some 
-% extra gaps in the subplots generated in the pdfs.
+%% SAVE_PLOTS  Saves one pdf plot per generation from all_pop.mat.
+%
+%   Script to make plots from all the snapshots
+%   Run nsga2.m with do_save = true first, so all_pop.mat exists, then
+%   make sure the .in file below is the same one used for that run.
+%
+%   For every generation it loads gen_<gen> from all_pop.mat, puts the
+%   columns back into the population layout used by show_plot()
+%   (save_pop() reorders them), plots it, and saves
+%   plots/gen_<gen>.pdf. The plots folder is cleared first.
+%
+%   xlist and flist below pick the variables and objectives to plot.
+%
+%   This script is not tuned well, there are some
+%   extra gaps in the subplots generated in the pdfs.
 
 addpath(genpath('./input_data'));   % this is where all the algorithm parameters are
 load_input_data('input_data/zdt1.in');

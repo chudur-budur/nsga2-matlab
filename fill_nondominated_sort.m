@@ -1,7 +1,29 @@
 function [ new_pop ] = fill_nondominated_sort(mixed_pop)
-%   This function fills up the new_pop from the old_pop
-%   according to the rank and crowding distance. This code
-%   is also extremely slow, need to optimize.
+%FILL_NONDOMINATED_SORT  Picks the next parent population (elitism).
+%
+%   new_pop = fill_nondominated_sort(mixed_pop) takes the merged
+%   parent + child population (2 * popsize rows), ranks it, and keeps
+%   the best popsize individuals. This function fills up the new_pop
+%   from the old_pop according to the rank and crowding distance --
+%       1. rank the whole mixed_pop and sort it by rank
+%          (assign_rank_only())
+%       2. compute the crowding distance of every front that makes it
+%          into the first popsize rows
+%       3. if the last front only partly fits, sort that front by
+%          crowding distance (largest first) so the less crowded ones
+%          are kept
+%       4. take the first popsize rows
+%
+%   Input:
+%       mixed_pop = merged population, see merge_pop()
+%   Output:
+%       new_pop   = next parent population, popsize rows, ranked and
+%                   with crowding distance
+%
+%   Globals used:
+%       nreal, nobj, ncon
+%
+%   This code is also extremely slow, need to optimize.
 
 global nreal ;
 global nobj ;
@@ -17,9 +39,11 @@ half_size = full_size / 2;
 mixed_pop(:,rank_col) = 0 ;
 mixed_pop(:,cd_col) = 0 ;
 
-% assign rank
+% assign rank, this also sorts the rows by rank
 mixed_pop = assign_rank_only(mixed_pop);
 
+% last_rank is the rank at the cut-off row, if next_last_rank is the
+% same then that front is split by the cut-off
 last_rank = mixed_pop(half_size,rank_col);
 next_last_rank = mixed_pop(half_size+1, rank_col);
 % now assign crowding distance up to the last rank

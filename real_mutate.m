@@ -1,6 +1,24 @@
 function [pvec] = real_mutate(pvec, pmut_real, eta_m, ...
                                 min_realvar, max_realvar)
-%   This code applies polynomical mutation over pvec.
+%REAL_MUTATE  Polynomial mutation for real variables.
+%
+%   pvec = real_mutate(pvec, pmut_real, eta_m, min_realvar,
+%   max_realvar) applies polynomical mutation over pvec. Each variable
+%   is mutated with probability pmut_real, and the result is clipped
+%   to the variable bounds.
+%
+%   Inputs:
+%       pvec        = row vector of real variables, nreal long
+%       pmut_real   = mutation probability per variable
+%       eta_m       = distribution index, a larger value makes smaller
+%                     changes
+%       min_realvar = lower bounds, column vector
+%       max_realvar = upper bounds, column vector
+%   Output:
+%       pvec        = mutated row vector
+%
+%   The looped version is used when nreal < 10, otherwise the
+%   vectorized one, since the vectorized one is slower on short vectors.
 
 nreal = length(pvec);
 

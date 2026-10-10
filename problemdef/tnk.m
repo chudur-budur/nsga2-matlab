@@ -1,8 +1,13 @@
 function [parent_pop] = tnk(parent_pop)
+%TNK  Tanaka's test problem, 2 objectives, 2 constraints.
+%
+%   parent_pop = tnk(parent_pop) evaluates every row of
+%   parent_pop at once.
+%
 %   This procedure implements Tanaka's function.
 %   The canonical Tanaka's function is defined as below --
 %   f_1 = x_1 
-%   f_2 = x-2
+%   f_2 = x_2
 %   s.t.
 %       c_1(x) = -1.0                                           if x_1 == 0.0
 %       c_1(x) = (x_1 ^ 2.0) + (x_2 ^ 2.0)                      otherwise
@@ -11,6 +16,13 @@ function [parent_pop] = tnk(parent_pop)
 %                           + (2.0 * (x_2 - 0.5) ^2.0))
 %   where
 %        0 <= x_i <= 3.15, i = 1,2
+%
+%   The objectives are written into columns nreal+1 : nreal+nobj.
+%   The constraints are written into columns
+%   nreal+nobj+1 : nreal+nobj+ncon, normalized so that a value
+%   >= 0 means the constraint is satisfied.
+%
+%   Use it with input_data/tnk.in.
 
 global nreal ;
 global ncon ;

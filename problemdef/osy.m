@@ -1,8 +1,13 @@
 function [parent_pop] = osy(parent_pop)
+%OSY  Osyczka and Kundu's test problem, 2 objectives, 6 constraints.
+%
+%   parent_pop = osy(parent_pop) evaluates every row of
+%   parent_pop at once.
+%
 %   This procedure implements Osyczka and Kundu's function.
-%   The canonical zdt1 function is defined as below --
-%   f_1 = -25.0 * ((x_1 - 2)^2 - (x_2 - 2)^2 - (x_3 - 1)^2 
-%                           - (x_4 - 4)^2 - (x_5 - 1)^2)
+%   The canonical osy function is defined as below --
+%   f_1 = -(25.0 * (x_1 - 2)^2 + (x_2 - 2)^2 + (x_3 - 1)^2
+%                           + (x_4 - 4)^2 + (x_5 - 1)^2)
 %   f_2 = sum_{i=1}^n x_i^2.0
 %   s.t.
 %       c_1(x) = x_1 + x_2 - 2 >= 0
@@ -18,6 +23,13 @@ function [parent_pop] = osy(parent_pop)
 %       0 <= x_4 <= 6.0
 %       1 <= x_5 <= 5.0
 %       0 <= x_6 <= 10.0
+%
+%   The objectives are written into columns nreal+1 : nreal+nobj.
+%   The constraints are written into columns
+%   nreal+nobj+1 : nreal+nobj+ncon, normalized so that a value
+%   >= 0 means the constraint is satisfied.
+%
+%   Use it with input_data/osy.in.
 
 global nreal ;
 global ncon ;

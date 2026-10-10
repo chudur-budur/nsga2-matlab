@@ -1,4 +1,9 @@
 function [parent_pop] = vnt(parent_pop)
+%VNT  Viennet's test problem, 3 objectives.
+%
+%   parent_pop = vnt(parent_pop) evaluates every row of
+%   parent_pop at once.
+%
 %   This procedure implements Viennet's function.
 %   The canonical Viennet's function is defined as below --
 %   
@@ -9,6 +14,10 @@ function [parent_pop] = vnt(parent_pop)
 %                       - (1.1 * exp(-1.0 * ((x_1 ^ 2.0) + (x_2 ^ 2.0))))
 %   where
 %       -3.0 <= x_i <= 3.0  (i = 1,2)
+%
+%   The objectives are written into columns nreal+1 : nreal+nobj.
+%
+%   Use it with input_data/vnt.in.
 
 global nreal ;
 

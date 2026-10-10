@@ -1,4 +1,9 @@
 function [parent_pop] = sch2(parent_pop)
+%SCH2  Schaffer's second test problem, 2 objectives.
+%
+%   parent_pop = sch2(parent_pop) evaluates every row of
+%   parent_pop at once.
+%
 %   This procedure implements sch2 (Schaffer's) function.
 %   The canonical sch2 function is defined as below --
 %
@@ -9,6 +14,10 @@ function [parent_pop] = sch2(parent_pop)
 %   f_2 = (x_1 - 5)^2
 %   where
 %       -5.0 <= x_1 <= 10.0
+%
+%   The objectives are written into columns nreal+1 : nreal+nobj.
+%
+%   Use it with input_data/sch2.in.
 
 global nreal ;
 

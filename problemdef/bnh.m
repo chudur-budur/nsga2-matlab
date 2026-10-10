@@ -1,4 +1,9 @@
 function [parent_pop] = bnh(parent_pop)
+%BNH  Binh and Korn's test problem, 2 objectives, 2 constraints.
+%
+%   parent_pop = bnh(parent_pop) evaluates every row of
+%   parent_pop at once.
+%
 %   This procedure implements bnh (Binh and Korn's) function.
 %   The canonical bnh function is defined as below --
 %   f_1 = 4.0 * (x_1^2 + x_2^2)
@@ -9,6 +14,13 @@ function [parent_pop] = bnh(parent_pop)
 %   where
 %       0 <= x_1 <= 5.0
 %       0 <= x_2 <= 3.0
+%
+%   The objectives are written into columns nreal+1 : nreal+nobj.
+%   The constraints are written into columns
+%   nreal+nobj+1 : nreal+nobj+ncon, normalized so that a value
+%   >= 0 means the constraint is satisfied.
+%
+%   Use it with input_data/bnh.in.
 
 global nreal ;
 global ncon ;

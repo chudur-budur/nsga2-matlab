@@ -1,6 +1,25 @@
 function [pop] = assign_rank_and_crowding_distance(pop)
-%   This procedure applies the non-dominated sort and
-%   then compute the crowding distance within each front.
+%ASSIGN_RANK_AND_CROWDING_DISTANCE  Non-dominated sort plus crowding.
+%
+%   pop = assign_rank_and_crowding_distance(pop) applies the
+%   non-dominated sort and then compute the crowding distance within
+%   each front. Used once on the first generation in nsga2.m, after
+%   that fill_nondominated_sort() does the job.
+%
+%   The fronts are peeled off one by one: the current front is every
+%   remaining individual that is not dominated by any other remaining
+%   individual (no -1 in its row of the dominance matrix). Those get
+%   the current front number as rank, then they are removed and the
+%   loop goes on until everyone is ranked.
+%
+%   Unlike assign_rank_only(), the rows are not sorted by rank.
+%
+%   Input/Output:
+%       pop = population matrix, the rank and crowd-dist columns are
+%             filled in
+%
+%   Globals used:
+%       nreal, nbin, nbits, nobj, ncon
 
 global nreal ;
 global nbin ;

@@ -1,5 +1,15 @@
 function [pop] = mutation_pop(pop)
-%   Applies mutation to whole population.
+%MUTATION_POP  Applies mutation to whole population.
+%
+%   pop = mutation_pop(pop) runs real_mutate() (polynomial mutation)
+%   on the variables of every individual, one row at a time. Only the
+%   real variable columns are touched.
+%
+%   Note: there is no binary mutation yet, so this only works for
+%   real-coded problems.
+%
+%   Globals used:
+%       pmut_real, eta_m, min_realvar, max_realvar
 global pmut_real ;
 global eta_m ;
 global min_realvar ;

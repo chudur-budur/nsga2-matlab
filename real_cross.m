@@ -1,6 +1,26 @@
 function [ c_vec1, c_vec2 ] = real_cross( p_vec1, p_vec2, pcross_real,...
                                             eta_c, min_realvar, max_realvar)
-%   Applies SBX over two vectors of double.
+%REAL_CROSS  Simulated binary crossover (SBX) for real variables.
+%
+%   [c_vec1, c_vec2] = real_cross(p_vec1, p_vec2, pcross_real, eta_c,
+%   min_realvar, max_realvar) applies SBX over two vectors of double.
+%   With probability pcross_real the parents are crossed, otherwise the
+%   children are copies of the parents. When crossed, each variable is
+%   crossed with probability 0.5, and the children are clipped to the
+%   variable bounds.
+%
+%   Inputs:
+%       p_vec1, p_vec2 = parent row vectors, nreal long
+%       pcross_real    = crossover probability
+%       eta_c          = distribution index, a larger value keeps the
+%                        children closer to the parents
+%       min_realvar    = lower bounds, column vector
+%       max_realvar    = upper bounds, column vector
+%   Outputs:
+%       c_vec1, c_vec2 = child row vectors
+%
+%   The looped version is used when nreal < 10, otherwise the
+%   vectorized one, since the vectorized one is slower on short vectors.
 
 nreal = length(p_vec1);
 

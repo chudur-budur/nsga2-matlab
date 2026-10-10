@@ -1,7 +1,28 @@
 function [ pop ] = assign_crowding_distance(pop, pf_indices)
-%   This function assigns crowding distance within a front
-%   pointed by the row indices in pf_indices. Code is a 
-%   vectorized translation from the original nsga-2 c-code.
+%ASSIGN_CROWDING_DISTANCE  Crowding distance within one front.
+%
+%   pop = assign_crowding_distance(pop, pf_indices) assigns crowding
+%   distance within a front pointed by the row indices in pf_indices,
+%   and writes it in the last column of pop. Code is a vectorized
+%   translation from the original nsga-2 c-code.
+%
+%   For each objective, the front is sorted on that objective, the two
+%   boundary individuals get inf, and every other individual gets the
+%   normalized gap between its two neighbours. The gaps are summed over
+%   all the objectives and divided by nobj.
+%
+%   Note: the rows in pf_indices come back sorted on the last
+%   objective, not in their original order.
+%
+%   Inputs:
+%       pop        = population matrix
+%       pf_indices = row indices of the individuals in the front
+%   Output:
+%       pop        = the same population with the crowd-dist column of
+%                    the front filled in
+%
+%   Globals used:
+%       nreal, nbin, nbits, nobj
  
 global nreal ;
 global nbin ;

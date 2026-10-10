@@ -1,6 +1,23 @@
 function [dom_mat] = generate_dominance_matrix(pop, indices)
-%   Generate the dominance matrix from the given population.
-%   This function is O(n^2).
+%GENERATE_DOMINANCE_MATRIX  Pairwise dominance of the whole population.
+%
+%   dom_mat = generate_dominance_matrix(pop, indices) generate the
+%   dominance matrix from the given population, all the pairs at once
+%   without any loop. Entry (i,j) of the matrix part is --
+%       1   if individual i dominates individual j
+%      -1   if individual j dominates individual i
+%       0   if they are non-dominated
+%   It uses the same constrained-domination rules as check_dominance().
+%
+%   Inputs:
+%       pop     = population matrix with n rows
+%       indices = row indices of pop, 1:n
+%   Output:
+%       dom_mat = n-by-(n+1) matrix, the first column is indices and
+%                 the rest is the n-by-n dominance matrix, so use
+%                 dom_mat(:, j+1) for the j-th individual
+%
+%   This function is O(n^2) in both time and memory.
 %
 %     |   *c    *d
 %     |
@@ -16,6 +33,9 @@ function [dom_mat] = generate_dominance_matrix(pop, indices)
 %   B   0   0   0   1
 %   C  -1   0   0   0
 %   D  -1  -1   0   0
+%
+%   Globals used:
+%       nreal, nobj, ncon
 
 global nreal ;
 global nobj ;
