@@ -74,7 +74,7 @@ problem:
 $$
 \begin{aligned}
 \min \quad & f_1(\mathbf{x}) = x_1^2 + x_2^2 \\
-\min \quad & f_2(\mathbf{x}) = (x_1 - 1)^2 + 20 \, (x_2 - 2)^2 \\
+\min \quad & f_2(\mathbf{x}) = (x_1 - 1)^2 + 20 (x_2 - 2)^2 \\
 \text{subject to} \quad & -5 \le x_i \le 5, \quad i = 1, 2
 \end{aligned}
 $$
