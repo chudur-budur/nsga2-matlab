@@ -6,13 +6,10 @@ disp(nbits)
 
 % ncross = 0 ;
 
-if(rand(1) <= pcross_bin) 
-% if(randomperc() <= pcross_real) % SLOW !!!
+if(rand(1) <= pcross_bin)
     % ncross = ncross + 1 ;
     site1 = randi([1, vlen], 1);
-    % site1 = rnd(1,nb); % SLOW !!!
     site2 = randi([1, vlen], 1);
-    % site2 = rnd(1,nb); % SLOW !!!
     if(site1 > site2)
         temp = site1;
         site1 = site2;
@@ -22,7 +19,7 @@ if(rand(1) <= pcross_bin)
     c_vec2 = [p_vec2(:,1:site1), p_vec1(:,site1+1:site2), p_vec2(:,site2+1:end)]
 else
     c_vec1 = p_vec1 ;
-    c_vec2 = p_vec2 ;    
+    c_vec2 = p_vec2 ;
 end
 end
 

@@ -3,14 +3,12 @@
 clear ;
 
 %% this is where all the algorithm parameters are
-addpath(genpath('./input_data'));   
+addpath(genpath('./input_data'));
 % this is where all the problems are defined
-addpath(genpath('./problemdef'));   
-% this is where all the legacy rng related stuffs are.
-% THIS IS NOT VECTORIZED, SO DO NOT USE, SLOW !!!
-addpath(genpath('./rand'));         
+addpath(genpath('./problemdef'));
 
 %% global variables that may be used here
+global seed
 global popsize ;
 global nreal ;
 global nbin ;
@@ -20,10 +18,11 @@ global ncon ;
 global ngen ;
 
 %% load algorithm parameters
-load_input_data('input_data/zdt4.in');
+load_input_data('input_data/zdt1.in');
 pprint('\nInput data successfully entered, now performing initialization\n\n');
 
-%% for debugging puproses 
+%% You can use these for debugging and these will override all the values
+%% from load_input_data().
 % global min_realvar ;
 % global max_realvar ;
 % popsize = 24 ;
@@ -38,14 +37,15 @@ pprint('\nInput data successfully entered, now performing initialization\n\n');
 % min_binvar = [0;0];
 % max_binvar = [5;5];
 
+%% The column numbers for the objective values.
 if(nreal > 0)
     obj_col = nreal + 1 : nreal + nobj ;
 elseif(nbin > 0)
     obj_col = sum(nbits) + 1 : sum(nbits) + nobj ;
 end
 
-%% this is the objective function that we are going to optimize
-obj_func = @zdt4 ;
+%% this is the objective function that we are going to optimize.
+obj_func = @zdt1 ;
 
 %% allocate memory for pops
 if(nreal > 0)
@@ -63,18 +63,24 @@ end
 
 %% start nsga2
 tic;
+
+% init rng
+seed = 1999;
+rng(seed, 'twister');
+
 % initialize population
-parent_pop = initialize_pop(90);
+parent_pop = initialize_pop();
 pprint('Initialization done, now performing first generation\n\n');
 parent_pop = evaluate_pop(parent_pop, obj_func);
 parent_pop = assign_rank_and_crowding_distance(parent_pop);
 
-do_plot = false ;
+%% Unset to stop the plotting on the fly.
+do_plot = true ;
 % plot the pareto front
 if(do_plot); show_plot(1, parent_pop, false, [1 2 3]); end;
 
+%% Set to save the current population.
 do_save = false ;
-% save the current pop
 if(do_save); save_pop(1, parent_pop, false); end;
 
 for i = 2:ngen
@@ -85,14 +91,14 @@ for i = 2:ngen
     child_pop = evaluate_pop(child_pop, obj_func);
     mixed_pop = merge_pop(parent_pop, child_pop);
     parent_pop = fill_nondominated_sort(mixed_pop);
-    
+
     % plot the current pareto front
-    % if(do_plot) 
+    % if(do_plot)
     %   show_plot(i, parent_pop, false, [1 2 3], [], ...
-    %       [0.0, 1.0], [0.0, 1.0]); 
+    %       [0.0, 1.0], [0.0, 1.0]);
     % end;
     if(do_plot); show_plot(i, parent_pop, false, [1 2 3]); end;
-    
+
     % save the current pop
     if(do_save); save_pop(i, parent_pop, false); end;
 end
