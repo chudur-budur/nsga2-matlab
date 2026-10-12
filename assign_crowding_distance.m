@@ -30,13 +30,13 @@ function [ pop ] = assign_crowding_distance(pop, pf_indices)
 
 global nreal ;
 global nbin ;
-global nbits ;
+global sumnbits ;
 global nobj ;
 
 if(nreal > 0)
     obj_col = nreal + 1 : nreal + nobj ;
 elseif(nbin > 0)
-    obj_col = sum(nbits) + 1 : sum(nbits) + nobj ;
+    obj_col = sumnbits + 1 : sumnbits + nobj ;
 end
 
 len = length(pf_indices);

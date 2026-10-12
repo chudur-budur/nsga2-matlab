@@ -18,15 +18,15 @@ function [parent_pop] = zdt5(parent_pop)
 %   implement the above yet. It simply counts the ones (f_1) and the
 %   zeros (f_2) over all the bits.
 %
-%   The objectives are written into columns sum(nbits)+1 : sum(nbits)+nobj.
+%   The objectives are written into columns sumnbits+1 : sumnbits+nobj.
 %
 %   Use it with input_data/zdt5.in.
 
 
 global nbin ;
-global nbits ;
+global sumnbits ;
 
-nb = sum(nbits);
+nb = sumnbits;
 
 b = parent_pop(:,1:nb);
 

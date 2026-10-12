@@ -49,6 +49,7 @@ global eta_c ;
 global eta_m ;
 global nbin ;
 global nbits ;
+global sumnbits;
 global min_binvar ;
 global max_binvar ;
 global pcross_bin ;
@@ -78,6 +79,7 @@ else
     nbin = data(6,1);
     cur_index = 7 ;
     nbits = data(cur_index:(cur_index + nbin)-1, 1);
+    sumnbits = sum(nbits);
     min_binvar = data(cur_index:(cur_index + nbin)-1, 2);
     max_binvar = data(cur_index:(cur_index + nbin)-1, 3);
     cur_index = cur_index + nbin ;

@@ -8,7 +8,7 @@ function [ c_vec1, c_vec2 ] = bin_cross_two_point( p_vec1, p_vec2, nbits, pcross
 %   the children are copies of the parents.
 %
 %   Inputs:
-%       p_vec1, p_vec2 = parent bit vectors (row vectors, sum(nbits) long)
+%       p_vec1, p_vec2 = parent bit vectors (row vectors, sumnbits long)
 %       nbits          = number of bits of each binary variable
 %       pcross_bin     = crossover probability
 %   Outputs:

@@ -11,7 +11,7 @@ function [ pop ] = initialize_pop()
 %   indiv[popsize]  ...     ...     ...     ...        ...      ...
 %
 %   Real variables are drawn uniformly from [min_realvar, max_realvar].
-%   Binary variables are drawn as random bits, sum(nbits) in total.
+%   Binary variables are drawn as random bits, sumnbits in total.
 %   All the other columns (objs, cons, cv, rank, crowd-dist) are set
 %   to zero, they are filled later by evaluate_pop() and the ranking
 %   functions.
@@ -23,7 +23,7 @@ function [ pop ] = initialize_pop()
 
 global popsize ;
 global nreal ;
-global nbits ;
+global sumnbits ;
 global nbin ;
 global nobj ;
 global ncon ;
@@ -45,9 +45,9 @@ if(nreal > 0)
 elseif(nbin > 0)
     % each individual is arranged like this --
     % [bits, nobj, ncon, cv, rank, crowd-dist]
-    pop = zeros(popsize, sum(nbits) + nobj + ncon + 3);
-    rand_vals = rand(popsize, sum(nbits)) > 0.5 ;
-    pop(:,1:sum(nbits)) = rand_vals ;
+    pop = zeros(popsize, sumnbits + nobj + ncon + 3);
+    rand_vals = rand(popsize, sumnbits) > 0.5 ;
+    pop(:,1:sumnbits) = rand_vals ;
 end
 end
 

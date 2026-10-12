@@ -20,7 +20,7 @@
 %
 %           [ vars | objs | cons | cv | rank | crowd-dist ]
 %
-%       vars       = nreal real variables, or sum(nbits) bits if binary
+%       vars       = nreal real variables, or sumnbits bits if binary
 %       objs       = nobj objective values (all minimized)
 %       cons       = ncon constraint values (>= 0 means satisfied)
 %       cv         = total constraint violation (<= 0, 0 means feasible)
@@ -57,6 +57,7 @@ global popsize ;
 global nreal ;
 global nbin ;
 global nbits ;
+global sumnbits;
 global nobj ;
 global ncon ;
 global ngen ;
@@ -87,7 +88,7 @@ pprint('\nInput data successfully entered, now performing initialization\n\n');
 if(nreal > 0)
     obj_col = nreal + 1 : nreal + nobj ;
 elseif(nbin > 0)
-    obj_col = sum(nbits) + 1 : sum(nbits) + nobj ;
+    obj_col = sumnbits + 1 : sumnbits + nobj ;
 end
 
 %% this is the objective function that we are going to optimize.
@@ -101,8 +102,8 @@ if(nreal > 0)
     child_pop = zeros(popsize, nreal + nobj + ncon + 3);
     mixed_pop = zeros(2 * popsize, nreal + nobj + ncon + 3);
 elseif(nbin > 0)
-    child_pop = zeros(popsize, sum(nbits) + nobj + ncon + 3);
-    mixed_pop = zeros(2 * popsize, sum(nbits) + nobj + ncon + 3);
+    child_pop = zeros(popsize, sumnbits + nobj + ncon + 3);
+    mixed_pop = zeros(2 * popsize, sumnbits + nobj + ncon + 3);
 end
 
 %% you need to warm-up the cache if you need to do profiling

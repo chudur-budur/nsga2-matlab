@@ -23,14 +23,14 @@ function [pop] = assign_rank_and_crowding_distance(pop)
 
 global nreal ;
 global nbin ;
-global nbits ;
+global sumnbits ;
 global nobj ;
 global ncon ;
 
 if(nreal > 0)
     rank_col = nreal + nobj + ncon + 2 ;
 elseif(nbin > 0)
-    rank_col = sum(nbits) + nobj + ncon + 2 ;
+    rank_col = sumnbits + nobj + ncon + 2 ;
 end
 
 [popsize, ~] = size(pop);
