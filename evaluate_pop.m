@@ -37,13 +37,13 @@ obj_col = nvar + 1: nvar + nobj ;
 parent_pop(:,obj_col) = 0 ;
 parent_pop = obj_func(parent_pop);
 
-% sum up only the negative (violated) constraint values
+% sum up only the negative (violated) constraint values, min() skips
+% NaN and +Inf like the c-code's (constr < 0) test, where (cons < 0)
+% .* cons would turn them into NaN
 if(ncon > 0)
     cv_col = nvar + nobj + ncon + 1 ;
-    parent_pop(:,cv_col) = 0;  
-    cons = parent_pop(:,nvar+nobj+1:nvar+nobj+ncon);    
-    % parent_pop(:,cv_col) = sum(((cons < 0.0) .* cons),2);
-    parent_pop(:,cv_col) = sum(bsxfun(@times, ...
-                                    bsxfun(@lt, cons, 0.0), cons),2);
+    parent_pop(:,cv_col) = 0;
+    cons = parent_pop(:,nvar+nobj+1:nvar+nobj+ncon);
+    parent_pop(:,cv_col) = sum(min(cons, 0), 2);
 end
 end
