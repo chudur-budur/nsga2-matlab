@@ -45,6 +45,13 @@ global eta_c ;
 
 [popsize,~] = size(old_pop);
 
+% number of variable columns, real or binary
+if(nreal > 0)
+    nvar = nreal ;
+elseif(nbin > 0)
+    nvar = sumnbits ;
+end
+
 % shuffle the parents so the tournament pairs are random
 old_pop =  old_pop(randperm(end),:);
 % old_pop =  shuffle(old_pop); % SLOW !!!
@@ -62,8 +69,8 @@ for i = 1:4:popsize
                                 old_pop(p2i, 1:sumnbits), ...
                                 nbits, pcross_bin);
     end
-    new_pop(i,  1:nreal) = c1 ;
-    new_pop(i+1,1:nreal) = c2 ;
+    new_pop(i,  1:nvar) = c1 ;
+    new_pop(i+1,1:nvar) = c2 ;
     % second pair of children, same four parents but new tournaments
     p1i = tournament(old_pop,i,  i+1);
     p2i = tournament(old_pop,i+2,i+3);
@@ -75,10 +82,10 @@ for i = 1:4:popsize
     elseif(nbin > 0)
             [c1, c2] = bin_cross_two_point(old_pop(p1i,1:sumnbits), ...
                                     old_pop(p2i,1:sumnbits), ...
-                                    pcross_bin);
+                                    nbits, pcross_bin);
     end
-    new_pop(i+2,1:nreal) = c1 ;
-    new_pop(i+3,1:nreal) = c2 ;    
+    new_pop(i+2,1:nvar) = c1 ;
+    new_pop(i+3,1:nvar) = c2 ;
 end
 end
 

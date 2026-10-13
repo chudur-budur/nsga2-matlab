@@ -35,14 +35,23 @@ function [dom_mat] = generate_dominance_matrix(pop, indices)
 %   D  -1  -1   0   0
 %
 %   Globals used:
-%       nreal, nobj, ncon
+%       nreal, nbin, sumnbits, nobj, ncon
 
 global nreal ;
+global nbin ;
+global sumnbits ;
 global nobj ;
 global ncon ;
 
-obj_col = nreal+1:nreal+nobj;
-cv_col = nreal+nobj+ncon+1;
+% number of variable columns, real or binary
+if(nreal > 0)
+    nvar = nreal ;
+elseif(nbin > 0)
+    nvar = sumnbits ;
+end
+
+obj_col = nvar+1:nvar+nobj;
+cv_col = nvar+nobj+ncon+1;
 
 % collect the relevant column data from input array
 cv = pop(:,cv_col);

@@ -17,7 +17,6 @@ function [ c_vec1, c_vec2 ] = bin_cross_two_point( p_vec1, p_vec2, nbits, pcross
 %   Note: the binary encoding is still a work in progress.
 
 vlen = length(p_vec1);
-disp(nbits)
 
 % ncross = 0 ;
 
@@ -32,8 +31,8 @@ if(rand(1) <= pcross_bin)
         site2 = temp;
     end
     % swap the middle segment
-    c_vec1 = [p_vec1(:,1:site1), p_vec2(:,site1+1:site2), p_vec1(:,site2+1:end)]
-    c_vec2 = [p_vec2(:,1:site1), p_vec1(:,site1+1:site2), p_vec2(:,site2+1:end)]
+    c_vec1 = [p_vec1(:,1:site1), p_vec2(:,site1+1:site2), p_vec1(:,site2+1:end)] ;
+    c_vec2 = [p_vec2(:,1:site1), p_vec1(:,site1+1:site2), p_vec2(:,site2+1:end)] ;
 else
     c_vec1 = p_vec1 ;
     c_vec2 = p_vec2 ;

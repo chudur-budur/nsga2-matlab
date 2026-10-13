@@ -19,14 +19,23 @@ function [ sindex ] = tournament(pop, index1, index2)
 %   to keep as it is.
 %
 %   Globals used:
-%       nreal, nobj, ncon
+%       nreal, nbin, sumnbits, nobj, ncon
 
 global nreal ;
+global nbin ;
+global sumnbits ;
 global nobj ;
 global ncon ;
 
-obj_col = nreal+1:nreal+nobj;
-cv_col = nreal+nobj+ncon+1;
+% number of variable columns, real or binary
+if(nreal > 0)
+    nvar = nreal ;
+elseif(nbin > 0)
+    nvar = sumnbits ;
+end
+
+obj_col = nvar+1:nvar+nobj;
+cv_col = nvar+nobj+ncon+1;
 
 % check the dominance
 flag = check_dominance([pop(index1,obj_col), pop(index1,cv_col)], ...

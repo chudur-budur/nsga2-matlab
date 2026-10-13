@@ -21,15 +21,24 @@ function [ new_pop ] = fill_nondominated_sort(mixed_pop)
 %                   with crowding distance
 %
 %   Globals used:
-%       nreal, nobj, ncon
+%       nreal, nbin, sumnbits, nobj, ncon
 %
 %   This code is also extremely slow, need to optimize.
 
 global nreal ;
+global nbin ;
+global sumnbits ;
 global nobj ;
 global ncon ;
 
-rank_col = nreal + nobj + ncon + 2 ;
+% number of variable columns, real or binary
+if(nreal > 0)
+    nvar = nreal ;
+elseif(nbin > 0)
+    nvar = sumnbits ;
+end
+
+rank_col = nvar + nobj + ncon + 2 ;
 cd_col = rank_col + 1;
 
 [full_size,~] = size(mixed_pop);

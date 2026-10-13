@@ -17,22 +17,31 @@ function [ parent_pop ] = evaluate_pop( parent_pop, obj_func )
 %       parent_pop = the same population with objs, cons and cv filled
 %
 %   Globals used:
-%       nreal, nobj, ncon
+%       nreal, nbin, sumnbits, nobj, ncon
 
 global nreal ;
+global nbin ;
+global sumnbits ;
 global nobj ;
 global ncon ;
 
+% number of variable columns, real or binary
+if(nreal > 0)
+    nvar = nreal ;
+elseif(nbin > 0)
+    nvar = sumnbits ;
+end
+
 % clear the old objective values before evaluation
-obj_col = nreal + 1: nreal + nobj ;
+obj_col = nvar + 1: nvar + nobj ;
 parent_pop(:,obj_col) = 0 ;
 parent_pop = obj_func(parent_pop);
 
 % sum up only the negative (violated) constraint values
 if(ncon > 0)
-    cv_col = nreal + nobj + ncon + 1 ;
+    cv_col = nvar + nobj + ncon + 1 ;
     parent_pop(:,cv_col) = 0;  
-    cons = parent_pop(:,nreal+nobj+1:nreal+nobj+ncon);    
+    cons = parent_pop(:,nvar+nobj+1:nvar+nobj+ncon);    
     % parent_pop(:,cv_col) = sum(((cons < 0.0) .* cons),2);
     parent_pop(:,cv_col) = sum(bsxfun(@times, ...
                                     bsxfun(@lt, cons, 0.0), cons),2);
