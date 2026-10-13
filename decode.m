@@ -25,17 +25,26 @@ global min_binvar ;
 global max_binvar ;
 
 bits = pop(:, 1:sumnbits);
+nb = nbits(:);
 
-% start offset of each variable in the bit vector
-offsets = [0; cumsum(nbits(:))];
+% which variable every bit belongs to, and its position inside it
+offsets = [0; cumsum(nb)];
+starts = zeros(sumnbits, 1);
+starts(offsets(1:nbin) + 1) = 1;
+vidx = cumsum(starts);
+pos = (1:sumnbits)' - offsets(vidx);
 
-x = zeros(size(pop, 1), nbin);
-for j = 1:nbin
-    % place values of the bits, most significant bit first
-    w = 2 .^ (nbits(j)-1 : -1 : 0)';
-    s = bits(:, offsets(j)+1 : offsets(j+1)) * w;
-    x(:, j) = min_binvar(j) + s * (max_binvar(j) - min_binvar(j)) ...
-                                / (2^nbits(j) - 1);
-end
+% sumnbits x nbin weight matrix, column j holds the place values of
+% variable j (most significant bit first) and zeros elsewhere, so
+% bits * w gives the unsigned integer value of every variable at once
+place = 2 .^ (nb(vidx) - pos);
+w = full(sparse((1:sumnbits)', vidx, place, sumnbits, nbin));
+s = bits * w;
+
+% map the integers linearly onto [min_binvar, max_binvar], multiplying
+% before dividing like the c-code so the results match it exactly
+vrange = (max_binvar(:) - min_binvar(:))';
+x = bsxfun(@plus, min_binvar(:)', ...
+        bsxfun(@rdivide, bsxfun(@times, s, vrange), (2 .^ nb' - 1)));
 
 end
