@@ -126,9 +126,6 @@ Define the algorithm parameters in `input_data/example.in`:
 10
 10
 0
-1
-1
-2
 ```
 
 Then refer to the parameter file at the top after the `global`
