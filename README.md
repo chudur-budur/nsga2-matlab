@@ -142,3 +142,12 @@ obj_func = @example;
 ```
 
 Now run `nsga2.m` file to solve it.
+
+## Differences from the original C code
+
+- **Crowding distance.** The C code gives infinite distance only to the minimum end of each objective (`crowddist.c`). This version gives it to both ends, as in the NSGA-II paper (Deb et al., 2002). Results are the same for 2 objectives but can differ for 3 or more.
+- **Test problems follow their published definitions**, not two bugs in the C code's `problemdef.c`:
+  - **TNK:** the C code has a sign typo in the second constraint. This version uses the published constraint, (x₁ − 0.5)² + (x₂ − 0.5)² ≤ 0.5. It also guards against division by zero on x₂, the actual divisor, instead of x₁.
+  - **ZDT5:** the C code counts only the first 4 bits of each 5-bit variable (`j < 4`), so one case of the formula never happens. This version counts all 5 bits.
+- **Random numbers.** The C code has its own random number generator (`rand.c`). This version uses MATLAB/Octave's built-in Mersenne Twister, so a run can't be reproduced bit-for-bit against the C code, even with the same seed.
+- **Input files.** The `.in` files here don't include the C code's gnuplot display settings at the end. Files from the C code still load, because those trailing lines are ignored.
