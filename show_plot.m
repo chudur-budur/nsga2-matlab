@@ -17,7 +17,9 @@ function [] = show_plot(gen, pop, varargin)
 %   With 2 objectives the front is a 2-d plot, otherwise a 3-d plot of
 %   the objectives in flist (the first 3 by default). If xlist is
 %   given, the figure is split in two and the right subplot shows the
-%   variables in xlist (2 or 3 of them).
+%   variables in xlist (2 or 3 of them). For binary problems xlist
+%   indexes the binary variables (1 .. nbin), which are decoded into
+%   real values with decode() before plotting.
 %
 %   It draws on the current figure (gcf) and calls drawnow, so calling
 %   it every generation gives an animation.
@@ -64,7 +66,13 @@ function [] = show_plot(gen, pop, varargin)
 
     if(~isempty(p.Results.xlist))
         xlist = p.Results.xlist ;
-        x = p.Results.pop(:, xlist);
+        if(nreal > 0)
+            x = p.Results.pop(:, xlist);
+        elseif(nbin > 0)
+            % binary variables are decoded into real values first
+            xdec = decode(p.Results.pop);
+            x = xdec(:, xlist);
+        end
     end
 
     fstr = sprintf('objective space, gen = %d', p.Results.gen);
