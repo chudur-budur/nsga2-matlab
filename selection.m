@@ -18,7 +18,7 @@ function [ new_pop ] = selection(old_pop, new_pop)
 %       new_pop = child population with the new variables
 %
 %   Crossover is real_cross() (SBX) for real variables, or
-%   bin_cross_two_point() for binary variables.
+%   bin_cross() for binary variables.
 %
 %   Note: popsize must be a multiple of 4.
 %
@@ -65,7 +65,7 @@ for i = 1:4:popsize
                                 pcross_real, eta_c, ...
                                 min_realvar, max_realvar);
     elseif(nbin > 0)
-        [c1, c2] = bin_cross_two_point(old_pop(p1i, 1:sumnbits), ...
+        [c1, c2] = bin_cross(old_pop(p1i, 1:sumnbits), ...
                                 old_pop(p2i, 1:sumnbits), ...
                                 nbits, pcross_bin);
     end
@@ -80,7 +80,7 @@ for i = 1:4:popsize
                                     pcross_real, eta_c, ...
                                     min_realvar, max_realvar);
     elseif(nbin > 0)
-            [c1, c2] = bin_cross_two_point(old_pop(p1i,1:sumnbits), ...
+            [c1, c2] = bin_cross(old_pop(p1i,1:sumnbits), ...
                                     old_pop(p2i,1:sumnbits), ...
                                     nbits, pcross_bin);
     end
