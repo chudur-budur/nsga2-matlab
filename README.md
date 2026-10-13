@@ -49,19 +49,35 @@ to solve this problem are defined in `input_data/zdt1.in`, etc.
 
 #### 1. What do the values in the files in `input_data` mean?
 
-They are parameters for the algorithm to solve a problem:
+They are parameters for the algorithm to solve a problem. For example,
+if it's a real-valued problem, the parameters will look like this:
 
 ```
 line 1: population size
 line 2: number of generations
 line 3: number of objectives
 line 4: number of constraints (if no constraints, it's 0)
-line 5: number of design variables
-line 6+n: lower and upper bound of n design variables, per line
-line 6+n+1: probability of crossover
-line 6+n+2: probability of mutation
-line 6+n+3: eta parameter for simulated binary crossover
-line 6+n+4: eta parameter for polynomial mutation
+line 5: number of real-valued design variables
+line 6 to 5+n: lower and upper bound of n design variables, per line
+line 6+n: probability of crossover
+line 6+n+1: probability of mutation
+line 6+n+2: eta parameter for simulated binary crossover
+line 6+n+3: eta parameter for polynomial mutation
+line 6+n+4: 0 (no binary design variable)
+```
+
+If you have a binary-valued problem:
+
+```
+line 1: population size
+line 2: number of generations
+line 3: number of objectives
+line 4: number of constraints (if no constraints, it's 0)
+line 5: 0 (no real-valued design variable)
+line 6: number of binary design variables
+line 7 to 6+n: number of bits, lower bound, upper bound of n design variables, per line
+line 7+n: probability of crossover
+line 8+n: probability of mutation
 ```
 
 See `load_input_data.m` for the details.
