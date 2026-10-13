@@ -129,8 +129,3 @@ obj_func = @example;
 ```
 
 Now run `nsga2.m` file to solve it.
-
-## WIP
-
-  1. Implement CTP functions: `ctp1` - `ctp8`
-  2. Implement binary problem: `zdt5`
