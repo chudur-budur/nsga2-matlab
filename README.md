@@ -47,7 +47,7 @@ to solve this problem are defined in `input_data/zdt1.in`, etc.
 
 ## FAQ
 
-#### 1. What are the values in the files in `problemdef` mean?
+#### 1. What do the values in the files in `input_data` mean?
 
 They are parameters for the algorithm to solve a problem:
 
