@@ -23,9 +23,11 @@ function [] = show_plot(gen, pop, varargin)
 %   it every generation gives an animation.
 %
 %   Globals used:
-%       nreal, nobj
+%       nreal, nbin, sumnbits, nobj
 
     global nreal ;
+    global nbin ;
+    global sumnbits ;
     global nobj ;
 
 	plotMarkerSize = 4;
@@ -43,19 +45,26 @@ function [] = show_plot(gen, pop, varargin)
     addOptional(p, 'zlim_', [], @(x) isvector(x) || isempty(x));
     parse(p, gen, pop, varargin{:});
 
+    % number of variable columns, real or binary
+    if(nreal > 0)
+        nvar = nreal ;
+    elseif(nbin > 0)
+        nvar = sumnbits ;
+    end
+
     if(nobj == 2)
-        f = p.Results.pop(:, nreal + [1 2]);
+        f = p.Results.pop(:, nvar + [1 2]);
     elseif(isempty(p.Results.flist))
-        f = p.Results.pop(:, nreal + [1 2 3]);
+        f = p.Results.pop(:, nvar + [1 2 3]);
         flist = [1 2 3] ;
     else
-        f = p.Results.pop(:, nreal + p.Results.flist);
+        f = p.Results.pop(:, nvar + p.Results.flist);
         flist = p.Results.flist ;
     end
 
     if(~isempty(p.Results.xlist))
         xlist = p.Results.xlist ;
-        x = p.Results.pop(:, nreal + xlist);
+        x = p.Results.pop(:, xlist);
     end
 
     fstr = sprintf('objective space, gen = %d', p.Results.gen);

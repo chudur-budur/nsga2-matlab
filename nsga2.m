@@ -44,7 +44,7 @@
 %   see load_input_data.m for the full list.
 
 %% clear all workspace variables
-clear ;
+clear global ;
 
 %% this is where all the algorithm parameters are
 addpath(genpath('./input_data'));

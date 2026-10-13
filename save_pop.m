@@ -29,19 +29,28 @@ function [] = save_pop(gen, current_pop, varargin)
 %       [ objs | cons | vars | cv | rank | crowd-dist ]
 %
 %   Globals used:
-%       nreal, nobj, ncon, nbin
+%       nreal, nbin, sumnbits, nobj, ncon
 
 global nreal ;
+global nbin ;
+global sumnbits ;
 global nobj ;
 global ncon ;
 
-rank_col = nreal + nobj + ncon + 2 ;
+% number of variable columns, real or binary
+if(nreal > 0)
+    nvar = nreal ;
+elseif(nbin > 0)
+    nvar = sumnbits ;
+end
+
+rank_col = nvar + nobj + ncon + 2 ;
 
 % move objs and cons before the vars, the last 3 columns stay in place
-pop = [current_pop(:, nreal + 1 : nreal + nobj), ...
-        current_pop(:, nreal + nobj + 1 : nreal + nobj + ncon), ...
-        current_pop(:, 1 : nreal), ...
-        current_pop(:, nreal + nobj + ncon + 1 : end)];
+pop = [current_pop(:, nvar + 1 : nvar + nobj), ...
+        current_pop(:, nvar + nobj + 1 : nvar + nobj + ncon), ...
+        current_pop(:, 1 : nvar), ...
+        current_pop(:, nvar + nobj + ncon + 1 : end)];
 
 p = inputParser;
 addRequired(p, 'gen', @isnumeric);
@@ -101,7 +110,7 @@ function [] = print_header(gen, file_name, header, option)
 global nreal ;
 global nobj ;
 global ncon ;
-global nbin ;
+global sumnbits ;
 
 file = fopen(file_name, option);
 if(strcmp(header, 'all'))
@@ -110,7 +119,7 @@ if(strcmp(header, 'all'))
         fprintf(file, '# of objectives = %d, # of constraints = %d, ', ...
             nobj, sum(ncon));
         fprintf(file, '# of real_var = %d, # of bits of bin_var = %d, ', ...
-            nreal, sum(nbin)); 
+            nreal, sum(sumnbits)); 
         fprintf(file, 'constr_violation, rank, crowding_distance\n');
         fprintf(file, '# gen = %d\n', gen);
     else
@@ -121,7 +130,7 @@ elseif(strcmp(header, 'final'))
     fprintf(file, '# of objectives = %d, # of constraints = %d, ', ...
         nobj, sum(ncon));
     fprintf(file, '# of real_var = %d, # of bits of bin_var = %d, ', ...
-        nreal, sum(nbin)); 
+        nreal, sum(sumnbits)); 
     fprintf(file, 'constr_violation, rank, crowding_distance\n');
     fprintf(file, '# gen = %d\n', gen);    
 elseif(strcmp(header, 'best'))
@@ -129,7 +138,7 @@ elseif(strcmp(header, 'best'))
     fprintf(file, '# of objectives = %d, # of constraints = %d, ', ...
         nobj, sum(ncon));
     fprintf(file, '# of real_var = %d, # of bits of bin_var = %d, ', ...
-        nreal, sum(nbin)); 
+        nreal, sum(sumnbits)); 
     fprintf(file, 'constr_violation, rank, crowding_distance\n');
     fprintf(file, '# gen = %d\n', gen);
 end
